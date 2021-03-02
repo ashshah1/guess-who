@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
+
 .App {
   text-align: center;
 }
@@ -5,6 +7,19 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+  z-index: 0;
+}
+
+.nav-link {
+  color: white;
+  z-index: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
