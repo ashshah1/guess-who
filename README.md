@@ -6,7 +6,7 @@ add in your own names and create your own guess who board with your friends. the
 
 coming to a web app near you in 2021.
 
-possibly created using react.
+definitely created using react.
 
 # created by
 
