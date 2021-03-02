@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from 'react-bootstrap';
 import './LandingPage.css';
 import background from "./images/landing-bg.png";

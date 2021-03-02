@@ -1,6 +1,3 @@
-import React from 'react'
-
-
 function Privacy() {
     return (
         <h1>privacy</h1>
