@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
 
 .landing-container {
-    height: 80%;
+    height: 90%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,21 +14,54 @@
     height: 100%;
     width: 100%;
     z-index: -1;
-} 
+}
 
+/* guess who */
+.top-header {
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    font-size: 4.5rem;
+    margin-bottom: 30px;
+}
+
+/* start/join game */
 .launch-container {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
-    font-family: "Nunito Sans";
+    width: 85%;
+    margin: auto;
+    font-weight: 800;
 }
 
-.top-header {
-    color: white;
-    font-family: "Nunito Sans";
-    text-align: center;
-    font-weight: 700;
-    font-size: 4.5rem;
+.launch-container form, label {
+    width: 100%;
 }
+
+/* enter room code */
+.launch-container input {
+    width: 100%;
+    height: 56px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 800;
+}
+
+/* start own game */
+.launch-container button {
+    width: 100%;
+    height: 56px;
+
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    text-align: center;
+    font-weight: 800;
+}
+
 
