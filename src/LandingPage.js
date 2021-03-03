@@ -4,7 +4,7 @@ import background from "./images/landing-bg.png";
 
 function LandingPage() {
     return(
-        <main className="container">
+        <main className="landing-container">
             <img className="background" src={background} />
                 <div>
                     <h1 className="top-header">guess who?</h1>

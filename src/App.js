@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <div className="app-container">
       <nav className="nav-bar">
         <ul className="nav-container">
           <li className="home">
