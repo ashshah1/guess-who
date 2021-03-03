@@ -1,5 +1,6 @@
 import { Button } from 'react-bootstrap';
 import './LandingPage.css';
+import { Link } from "react-router-dom";
 import background from "./images/landing-bg.png";
 
 function LandingPage() {
@@ -15,7 +16,9 @@ function LandingPage() {
                             </label>
                         </form>
                         <p>or</p>
-                        <button className="btn btn-info">START YOUR OWN GAME</button>
+                        <Link to="/prep">
+                            <button className="btn btn-info">START YOUR OWN GAME</button>
+                        </Link>
                     </div>
                 </div>
         </main>
