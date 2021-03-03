@@ -1,11 +1,12 @@
 import './App.css';
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-import LandingPage from './LandingPage.js'
-import About from './About.js'
-import Privacy from './Privacy.js'
-import HowToPlay from './HowToPlay.js'
-import Toe from './Toe.js'
-import Game from './Game.js'
+import LandingPage from './LandingPage.js';
+import About from './About.js';
+import Privacy from './Privacy.js';
+import HowToPlay from './HowToPlay.js';
+import Toe from './Toe.js';
+import Game from './Game.js';
+import SetUp from './SetUp.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -31,6 +32,9 @@ function App() {
           <li>
             <Link to="/toe" className="nav-link">Tic Tac Toe</Link>
           </li>
+          <li>
+            <Link to="/prep" className="nav-link">Prep</Link>
+          </li>
           
 
         </ul>
@@ -45,6 +49,8 @@ function App() {
         // todo: change back to landing page
         <Route exact path="/" component={LandingPage} />
         <Route path="/toe" component={Toe} />
+        <Route path="/prep" component={SetUp} />
+
       </Switch>
     </div>
     </BrowserRouter>

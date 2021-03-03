@@ -1,0 +1,19 @@
+.name-container {
+    border: 3px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 20px;
+
+    height: 300px;
+
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2rem;
+    margin: 3rem;
+}
+
+.personas {
+    color: white;
+}
