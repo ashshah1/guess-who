@@ -16,6 +16,14 @@ body {
   pointer-events: none;
 }
 
+/* landing page nav bar positioning */
+.nav-bar-bottom {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+
 .nav-container {
   display: flex;
   flex-direction: row;
