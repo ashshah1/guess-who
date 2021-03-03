@@ -36,6 +36,11 @@
     font-weight: 800;
 }
 
+.launch-container p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 .launch-container form, label {
     width: 100%;
 }
@@ -44,24 +49,35 @@
 .launch-container input {
     width: 100%;
     height: 56px;
-    border: 1px solid #C4C4C4;
+    border: 1px solid #FDD55C;
     box-sizing: border-box;
     border-radius: 10px;
     text-align: center;
     font-weight: 800;
 }
 
-/* start own game */
+/* start/join buttons */
 .launch-container button {
     width: 100%;
     height: 56px;
 
-    border: 1px solid #C4C4C4;
+    /*border: 1px solid #C4C4C4;*/
     box-sizing: border-box;
     border-radius: 10px;
 
     text-align: center;
     font-weight: 800;
+}
+
+.launch-container .btn-join {
+    border: 1px solid #FDD55C;
+    background-color: #FDD55C;
+    color: #fff;
+}
+
+.launch-container .btn-join:hover {
+    border: 1px solid #FDD55C;
+    background-color: #edc651;
 }
 
 
