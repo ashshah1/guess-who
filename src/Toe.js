@@ -13,7 +13,7 @@ class App extends Component {
       publishKey: "pub-c-885874fe-b734-481e-9c92-500e37e5aaa0",
       subscribeKey: "sub-c-d3a9aef4-7bb7-11eb-8096-3e6ae84b74ea"
     });
-    
+
     this.state = {
       piece: '',
       isPlaying: false,
@@ -24,10 +24,19 @@ class App extends Component {
 
     this.lobbyChannel = null;
     this.gameChannel = null;
-    this.roomId = null;    
+    this.roomId = null;
     this.pubnub.init(this);
-  }  
-  
+
+  }
+  componentDidMount() {
+    // create or join room one board loads
+    if (this.props.location.state.code === null) {
+      this.onPressCreate();
+    } else {
+      this.joinRoom(this.props.location.state.code);
+    }
+  }
+
   componentWillUnmount() {
     this.pubnub.unsubscribe({
       channels : [this.lobbyChannel, this.gameChannel]
@@ -191,7 +200,7 @@ class App extends Component {
     return (  
         <div> 
           <div className="title">
-            <p>React Tic Tac Toe</p>
+            <p>React Tic Tac Toe: {this.roomId}</p>
           </div>
 
           {

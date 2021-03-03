@@ -4,6 +4,7 @@ import NameList from './NameList.js'
 import { Button } from 'react-bootstrap'
 
 import './SetUp.css';
+import {Link} from "react-router-dom";
 
 
 function SetUp () {
@@ -25,7 +26,14 @@ function SetUp () {
             <p className="counter">{names.length} / 24 names added</p>
             <NameList names={names}></NameList>
             <AddNamesForm addNameCallback={addName}></AddNamesForm>
-            <Button className="start-button" variant="secondary">start game</Button>
+            <Link to={{
+                pathname: '/toe',
+                state: {
+                    code: null
+                }
+            }}>
+                <Button className="start-button" variant="secondary">start game</Button>
+            </Link>
         </div>
     )
 }
