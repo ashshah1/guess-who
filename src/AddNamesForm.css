@@ -1,0 +1,10 @@
+.names-form {
+    width: 20%;
+}
+
+
+.add-name, .add-button {
+    margin-top: 2rem;
+    margin-right: 2rem;
+    margin-left: 3rem;
+}

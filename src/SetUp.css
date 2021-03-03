@@ -1,3 +1,25 @@
 .set-up-page {
+    position: fixed;
+    top: 0;
+    left: 0;
     background-color: #348FDB;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.start-button {
+    position: fixed;
+    bottom: 0px;
+    right: 0px; 
+    margin: 5rem;
+}
+
+.counter {
+    color: white;
+    font-size: 2.2rem;
+    position: fixed;
+    bottom: 0px;
+    right: 0px; 
+    margin: 2rem 5rem 10rem;
 }
