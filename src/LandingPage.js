@@ -4,20 +4,20 @@ import background from "./images/landing-bg.png";
 
 function LandingPage() {
     return(
-        <main className="container">
+        <main className="landing-container">
             <img className="background" src={background} />
-            <div>
-                <h1 className="top-header">guess who?</h1>
-                <div className="launch-container">
-                    <form>
-                        <label>
-                            <input type="text" name="code" placeholder="ENTER ROOM CODE"></input>
-                        </label>
-                    </form>
-                    <p>or</p>
-                    <button className="btn btn-info">START YOUR OWN GAME</button>
+                <div>
+                    <h1 className="top-header">guess who?</h1>
+                    <div className="launch-container">
+                        <form>
+                            <label>
+                                <input type="text" name="code" placeholder="ENTER ROOM CODE"></input>
+                            </label>
+                        </form>
+                        <p>or</p>
+                        <button className="btn btn-info">START YOUR OWN GAME</button>
+                    </div>
                 </div>
-            </div>
         </main>
     )
 }
