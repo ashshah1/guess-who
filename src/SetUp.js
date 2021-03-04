@@ -11,6 +11,7 @@ function SetUp (props) {
 
     let names = props.names;
 
+    // sets class names for the button to active if the user has reached 24 names
     let status = true;
     let variant = "secondary"
     if (names.length === 24) {

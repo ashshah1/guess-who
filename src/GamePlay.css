@@ -8,3 +8,9 @@
     z-index: -1;
 }
 
+.quit-button {
+    position: fixed;
+    bottom: 0px;
+    right: 0px; 
+    margin: 5rem;
+}

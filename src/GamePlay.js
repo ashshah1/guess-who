@@ -1,5 +1,7 @@
 import './GamePlay.css';
 import GameBoard from './GameBoard.js';
+import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 function GamePlay(props) {
 
@@ -11,6 +13,10 @@ function GamePlay(props) {
             <div className="game-play-page">&nbsp;</div>
             <GameBoard names={names}></GameBoard>
             <div className="chat">&nbsp;</div>
+            
+            <Link to="/">
+                <Button className="quit-button" variant="danger">quit game</Button>
+            </Link>
         </div>
     )
 }

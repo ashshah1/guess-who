@@ -1,9 +1,9 @@
 import './NameList.css';
 
-// passed in props.names[i] from prev
 function NameElem(props) {
 let name = props.name;
 
+    // lets user click on a name to remove it
     const handleClick = (event) => {
         props.removeName(name)
     }
