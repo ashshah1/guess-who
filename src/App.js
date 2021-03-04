@@ -19,7 +19,7 @@ function App() {
   // let params = useLocation();
   // console.log(params);
 
-  const SAMPLE_NAMES = ["ash", "megan", "claire"];
+  const SAMPLE_NAMES = ["ash", "megan", "claire", "sean", "jacob", "bo", "ariel from cse 442", "cornelius", "maverick", "grant ward", "ambulance", "candle", "squiggle"];
 
   const [names, setNames] = useState(SAMPLE_NAMES);
     const addName = (newName) => {
@@ -27,6 +27,15 @@ function App() {
         let updatedNames = [...names]
         updatedNames.push(newPerson)
         setNames(updatedNames);
+    }
+
+    const removeName = (cutName) => {
+      let index = names.indexOf(cutName);
+      let updatedNames = [...names]
+      if (index !== -1) {
+        updatedNames.splice(index, 1);
+      }
+      setNames(updatedNames);
     }
 
   return (
@@ -43,7 +52,7 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/toe" component={Toe} />
           <Route path="/prep">
-            <SetUp names={names} addName={addName}/>
+            <SetUp names={names} addName={addName} removeName={removeName}/>
           </Route>
           <Route path="/play">
             <GamePlay names={names}/>

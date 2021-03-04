@@ -1,5 +1,5 @@
 import './GamePlay.css';
-import GameBoard from './GameBoard.js'
+import GameBoard from './GameBoard.js';
 
 function GamePlay(props) {
 
@@ -10,6 +10,7 @@ function GamePlay(props) {
         <div>
             <div className="game-play-page">&nbsp;</div>
             <GameBoard names={names}></GameBoard>
+            <div className="chat">&nbsp;</div>
         </div>
     )
 }

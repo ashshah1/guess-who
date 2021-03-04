@@ -11,11 +11,18 @@ function SetUp (props) {
 
     let names = props.names;
 
+    let status = true;
+    let variant = "secondary"
+    if (names.length === 24) {
+        status = false;
+        variant = "success";
+    }
+
     return (
         <div>
             <div className="set-up-page">&nbsp;</div>
             <p className="counter">{names.length} / 24 names added</p>
-            <NameList names={names}></NameList>
+            <NameList names={names} removeName={props.removeName}></NameList>
             <AddNamesForm addNameCallback={props.addName}></AddNamesForm>
             <Link to={{
                 pathname: '/toe',
@@ -23,7 +30,7 @@ function SetUp (props) {
                     code: null
                 }
             }}>
-                <Button className="start-button" variant="secondary">start game</Button>
+                <Button className="start-button" variant={variant} disabled={status}>start game</Button>
             </Link>
         </div>
     )
