@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route, Link, useLocation } from "react-router-dom";
 import LandingPage from './LandingPage.js';
@@ -8,6 +8,7 @@ import Privacy from './Privacy.js';
 import HowToPlay from './HowToPlay.js';
 import Toe from './Toe.js';
 import Game from './Game.js';
+import GamePlay from './GamePlay.js';
 import SetUp from './SetUp.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,6 +18,16 @@ function App() {
   // const { location: { pathname } } = props;
   // let params = useLocation();
   // console.log(params);
+
+  const SAMPLE_NAMES = ["ash", "megan", "claire"];
+
+  const [names, setNames] = useState(SAMPLE_NAMES);
+    const addName = (newName) => {
+        let newPerson = newName;
+        let updatedNames = [...names]
+        updatedNames.push(newPerson)
+        setNames(updatedNames);
+    }
 
   return (
     <BrowserRouter>
@@ -31,7 +42,12 @@ function App() {
           <Route path="/how" component={HowToPlay}/>
           <Route exact path="/" component={LandingPage} />
           <Route path="/toe" component={Toe} />
-          <Route path="/prep" component={SetUp} />
+          <Route path="/prep">
+            <SetUp names={names} addName={addName}/>
+          </Route>
+          <Route path="/play">
+            <GamePlay names={names}/>
+          </Route>
 
         </Switch>
       </div>
@@ -63,7 +79,7 @@ const NavBar  = () => {
             <Link to="/toe" className="nav-link">Tic Tac Toe</Link>
           </li>
           <li>
-            <Link to="/prep" className="nav-link">Prep</Link>
+            <Link to="/play" className="nav-link">Play!</Link>
           </li>
         </ul>
       </nav>
