@@ -17,7 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
 
-  const SAMPLE_NAMES = ["ash", "megan", "claire", "sean", "jacob", "bo", "ariel from cse 442", "cornelius", "maverick", "grant ward", "ambulance", "candle", "squiggle"];
+  const SAMPLE_NAMES = [];
 
   const [names, setNames] = useState(SAMPLE_NAMES);
 
