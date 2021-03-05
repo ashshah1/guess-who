@@ -5,9 +5,11 @@ import PubNubReact from 'pubnub-react';
 import Swal from "sweetalert2";  
 import shortid  from 'shortid';
 import './Game.css';
+import GamePlay from "./GamePlay";
+
  
 class App extends Component {
-  constructor(props) {  
+  constructor(props) {
     super(props);
     this.pubnub = new PubNubReact({
       publishKey: "pub-c-885874fe-b734-481e-9c92-500e37e5aaa0",
@@ -20,6 +22,7 @@ class App extends Component {
       isRoomCreator: false,
       isDisabled: false,
       myTurn: false,
+      names: this.props.location.state.names
     };
 
     this.lobbyChannel = null;
@@ -46,9 +49,18 @@ class App extends Component {
   componentDidUpdate() {
     // Check that the player is connected to a channel
     if(this.lobbyChannel != null){
+      // listener for all incoming messages
       this.pubnub.getMessage(this.lobbyChannel, (msg) => {
         // Start the game once an opponent joins the channel
         if(msg.message.notRoomCreator){
+          // publish board names for opponent's use
+          this.pubnub.publish({
+            message: {
+              names: this.props.location.state.names
+            },
+            channel: this.lobbyChannel
+          });
+
           // Create a different channel for the game
           this.gameChannel = 'tictactoegame--' + this.roomId;
 
@@ -58,10 +70,15 @@ class App extends Component {
 
           this.setState({
             isPlaying: true
-          });  
+          });
 
           // Close the modals if they are opened
           Swal.close();
+        } else if (msg.message.names !== undefined) {
+          // Get board names
+          this.setState({
+            names: msg.message.names
+          });
         }
       }); 
     }
@@ -147,7 +164,8 @@ class App extends Component {
           this.setState({
             piece: 'O',
           });  
-          
+
+          // tells other player someone has joined channel
           this.pubnub.publish({
             message: {
               notRoomCreator: true,
@@ -204,45 +222,53 @@ class App extends Component {
           </div>
 
           {
-            !this.state.isPlaying &&
-            <div className="game">
-              <div className="board">
-                <Board
-                    squares={0}
-                    onClick={index => null}
-                  />  
-                  
-                <div className="button-container">
-                  <button 
-                    className="create-button "
-                    disabled={this.state.isDisabled}
-                    onClick={(e) => this.onPressCreate()}
-                    > Create 
-                  </button>
-                  <button 
-                    className="join-button"
-                    onClick={(e) => this.onPressJoin()}
-                    > Join 
-                  </button>
-                </div>                        
-          
-              </div>
-            </div>
+            (!this.state.isPlaying && this.state.names !== undefined) &&
+            <GamePlay names={this.state.names}></GamePlay>
+            // <div className="game">
+            //   <div className="board">
+            //     <Board
+            //         squares={0}
+            //         names={this.state.names}
+            //         onClick={index => null}
+            //       />
+            //
+            //     <div className="button-container">
+            //       <button
+            //         className="create-button "
+            //         disabled={this.state.isDisabled}
+            //         onClick={(e) => this.onPressCreate()}
+            //         > Create
+            //       </button>
+            //       <button
+            //         className="join-button"
+            //         onClick={(e) => this.onPressJoin()}
+            //         > Join
+            //       </button>
+            //     </div>
+            //
+            //   </div>
+            // </div>
           }
 
           {
             this.state.isPlaying &&
-            <Game 
+            <Game
               pubnub={this.pubnub}
-              gameChannel={this.gameChannel} 
+              gameChannel={this.gameChannel}
               piece={this.state.piece}
               isRoomCreator={this.state.isRoomCreator}
               myTurn={this.state.myTurn}
               xUsername={this.state.xUsername}
               oUsername={this.state.oUsername}
               endGame={this.endGame}
+              names={this.state.names}
             />
+
           }
+          {/*<GameBoard names={this.props.location.state.names}>*/}
+
+          {/*</GameBoard>*/}
+
         </div>
     );  
   } 
