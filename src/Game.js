@@ -1,6 +1,7 @@
 import React from 'react';
 import Board from './Board';
-import Swal from "sweetalert2";  
+import Swal from "sweetalert2";
+import GamePlay from "./GamePlay";
 
 class Game extends React.Component {
   constructor(props) {
@@ -18,9 +19,10 @@ class Game extends React.Component {
   }
 
   componentDidMount(){
+    // get moves
     this.props.pubnub.getMessage(this.props.gameChannel, (msg) => {
       // Publish move to the opponent's board
-      if(msg.message.turn === this.props.piece){
+      if(msg.message.turn === this.props.piece) {
         this.publishMove(msg.message.index, msg.message.piece);
       }
 
@@ -215,26 +217,30 @@ class Game extends React.Component {
     // Change to current player's turn
     status = `${this.state.whosTurn ? "Your turn" : "Opponent's turn"}`;
 
+    let names = this.props.names !== undefined ? this.props.names : [];
     return (
-      <div className="game">
-        <div className="board">
-          <Board
-              squares={this.state.squares}
-              onClick={index => this.onMakeMove(index)}
-            />  
-            <p className="status-info">{status}</p>        
-        </div>
-        
-        <div className="scores-container">
-          <div>
-            <p>Player X: {this.state.xScore} </p>
-          </div>
+        <GamePlay names={names}></GamePlay>
 
-          <div>
-            <p>Player O: {this.state.oScore} </p>
-          </div>
-        </div>   
-      </div>
+      // {/*<div className="game">*/}
+      // {/*  <div className="board">*/}
+      // {/*    <Board*/}
+      // {/*        squares={this.state.squares}*/}
+      // {/*        names={this.state.names}*/}
+      // {/*        onClick={index => this.onMakeMove(index)}*/}
+      // {/*      />  */}
+      // {/*      <p className="status-info">{status}</p>        */}
+      // {/*  </div>*/}
+      // {/*  */}
+      // {/*  <div className="scores-container">*/}
+      // {/*    <div>*/}
+      // {/*      <p>Player X: {this.state.xScore} </p>*/}
+      // {/*    </div>*/}
+      //
+      // {/*    <div>*/}
+      // {/*      <p>Player O: {this.state.oScore} </p>*/}
+      // {/*    </div>*/}
+      // {/*  </div>   */}
+      // {/*</div>*/}
     );
   }
 }

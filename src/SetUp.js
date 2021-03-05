@@ -20,7 +20,8 @@ function SetUp (props) {
             <Link to={{
                 pathname: '/toe',
                 state: {
-                    code: null
+                    code: null,
+                    names: names
                 }
             }}>
                 <Button className="start-button" variant="secondary">start game</Button>
