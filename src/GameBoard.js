@@ -8,7 +8,7 @@ function GameBoard(props) {
 
     // Creates an array of Card elements to populate the board
     let allCard = names.map((name) => {
-        return (<Card name={name}></Card>)
+        return (<Card name={name} onClick={() => props.onClick(name)}></Card>)
     })
 
     return (

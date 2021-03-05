@@ -6,12 +6,11 @@ import { Link } from 'react-router-dom'
 function GamePlay(props) {
 
     let names = props.names;
-    console.log(names);
 
     return (
         <div>
             <div className="game-play-page">&nbsp;</div>
-            <GameBoard names={names}></GameBoard>
+            <GameBoard names={names} onClick={props.onClick}></GameBoard>
             <div className="chat">&nbsp;</div>
             
             <Link to="/">

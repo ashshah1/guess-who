@@ -4,11 +4,11 @@ import Board from './Board';
 import PubNubReact from 'pubnub-react';
 import Swal from "sweetalert2";  
 import shortid  from 'shortid';
-import './Game.css';
+// import './Game.css';
 import GamePlay from "./GamePlay";
 
  
-class App extends Component {
+class Toe extends Component {
   constructor(props) {
     super(props);
     this.pubnub = new PubNubReact({
@@ -22,6 +22,8 @@ class App extends Component {
       isRoomCreator: false,
       isDisabled: false,
       myTurn: false,
+
+      person: '',
       names: this.props.location.state.names
     };
 
@@ -56,7 +58,7 @@ class App extends Component {
           // publish board names for opponent's use
           this.pubnub.publish({
             message: {
-              names: this.props.location.state.names
+              names: this.state.names
             },
             channel: this.lobbyChannel
           });
@@ -76,8 +78,10 @@ class App extends Component {
           Swal.close();
         } else if (msg.message.names !== undefined) {
           // Get board names
+          let names = msg.message.names;
           this.setState({
-            names: msg.message.names
+            names: names,
+            person: names[Math.floor(Math.random() * 24)]
           });
         }
       }); 
@@ -117,6 +121,8 @@ class App extends Component {
       isRoomCreator: true,
       isDisabled: true, // Disable the 'Create' button
       myTurn: true, // Room creator makes the 1st move
+
+      person: this.state.names[Math.floor(Math.random() * 24)]
     });   
   }
   
@@ -160,7 +166,7 @@ class App extends Component {
             channels: [this.lobbyChannel],
             withPresence: true
           });
-          
+
           this.setState({
             piece: 'O',
           });  
@@ -214,16 +220,20 @@ class App extends Component {
     });
   }
   
-  render() {  
+  render() {
     return (  
         <div> 
-          <div className="title">
-            <p>React Tic Tac Toe: {this.roomId}</p>
-          </div>
+
 
           {
             (!this.state.isPlaying && this.state.names !== undefined) &&
-            <GamePlay names={this.state.names}></GamePlay>
+              <div>
+                <div className="title">
+                  <p>Lobby - React Tic Tac Toe: {this.roomId}</p>
+                </div>
+                <GamePlay names={this.state.names} playing={false}></GamePlay>
+              </div>
+
             // <div className="game">
             //   <div className="board">
             //     <Board
@@ -251,21 +261,26 @@ class App extends Component {
           }
 
           {
-            this.state.isPlaying &&
-            <Game
-              pubnub={this.pubnub}
-              gameChannel={this.gameChannel}
-              piece={this.state.piece}
-              isRoomCreator={this.state.isRoomCreator}
-              myTurn={this.state.myTurn}
-              xUsername={this.state.xUsername}
-              oUsername={this.state.oUsername}
-              endGame={this.endGame}
-              names={this.state.names}
-            />
+            (this.state.isPlaying && this.state.names !== undefined) &&
+            <div>
+              <div className="title">
+                <p>Game - React Tic Tac Toe: {this.roomId}</p>
+              </div>
+              <Game
+                  pubnub={this.pubnub}
+                  gameChannel={this.gameChannel}
+                  piece={this.state.piece}
+                  isRoomCreator={this.state.isRoomCreator}
+                  myTurn={this.state.myTurn}
+                  xUsername={this.state.xUsername}
+                  oUsername={this.state.oUsername}
+                  endGame={this.endGame}
 
+                  names={this.state.names}
+                  person={this.state.person}
+              />
+            </div>
           }
-          {/*<GameBoard names={this.props.location.state.names}>*/}
 
           {/*</GameBoard>*/}
 
@@ -274,4 +289,4 @@ class App extends Component {
   } 
 }
 
-export default App;
+export default Toe;

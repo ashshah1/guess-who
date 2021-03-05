@@ -17,11 +17,11 @@ function Card(props) {
         hidden = "guess";
     }
 
-
+    console.log(props);
     return (
         <div className="card-container" onMouseEnter={onEnter} onMouseLeave={onLeave}>
             <p>{props.name}</p>
-            <p className={hidden}>GUESS</p>
+            <button className={hidden} onClick={props.onClick}>GUESS</button>
         </div>
     )
 }
