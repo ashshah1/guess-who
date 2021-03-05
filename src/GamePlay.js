@@ -19,10 +19,11 @@ function GamePlay(props) {
             </div>
         )
     } else {
+        let msg = props.host ? "waiting for opponent to join" : "loading game...";
         return (
             <div>
                 <div className="game-play-page">&nbsp;</div>    
-                <p className="typewriter">waiting for opponent to join</p>          
+                <p className="typewriter">{msg}</p>
                 <Link to="/">
                     <Button className="quit-button" variant="danger">quit game</Button>
                 </Link>
