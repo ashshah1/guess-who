@@ -21,6 +21,7 @@ class Toe extends Component {
       isRoomCreator: false,
       isDisabled: false,
       myTurn: false,
+      gameEnded: false,
       names: (this.props.location.state !== undefined) ? this.props.location.state.names : null
     };
 
@@ -208,6 +209,7 @@ class Toe extends Component {
       isRoomCreator: false,
       isDisabled: false,
       myTurn: false,
+      gameEnded: true
     });
 
     this.lobbyChannel = null;
@@ -221,7 +223,7 @@ class Toe extends Component {
   
   render() {
       // navigate to home if user did not navigate to page correctly
-      if (this.props.location.state === undefined) {
+      if (this.props.location.state === undefined || this.state.gameEnded) {
           return (
             <Redirect to="/"/>
           );
