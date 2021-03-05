@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import Game from './Game';
-import Board from './Board';
 import PubNubReact from 'pubnub-react';
 import Swal from "sweetalert2";  
 import shortid  from 'shortid';
-// import './Game.css';
 import GamePlay from "./GamePlay";
 
  
@@ -22,8 +20,6 @@ class Toe extends Component {
       isRoomCreator: false,
       isDisabled: false,
       myTurn: false,
-
-      person: '',
       names: this.props.location.state.names
     };
 
@@ -221,10 +217,9 @@ class Toe extends Component {
   }
   
   render() {
-    return (  
-        <div> 
-
-
+    return (
+        // display lobby or game depending on if game in progress
+        <div>
           {
             (!this.state.isPlaying && this.state.names !== undefined) &&
               <div>
@@ -233,31 +228,6 @@ class Toe extends Component {
                 </div>
                 <GamePlay names={this.state.names} playing={false}></GamePlay>
               </div>
-
-            // <div className="game">
-            //   <div className="board">
-            //     <Board
-            //         squares={0}
-            //         names={this.state.names}
-            //         onClick={index => null}
-            //       />
-            //
-            //     <div className="button-container">
-            //       <button
-            //         className="create-button "
-            //         disabled={this.state.isDisabled}
-            //         onClick={(e) => this.onPressCreate()}
-            //         > Create
-            //       </button>
-            //       <button
-            //         className="join-button"
-            //         onClick={(e) => this.onPressJoin()}
-            //         > Join
-            //       </button>
-            //     </div>
-            //
-            //   </div>
-            // </div>
           }
 
           {
@@ -277,13 +247,9 @@ class Toe extends Component {
                   endGame={this.endGame}
 
                   names={this.state.names}
-                  person={this.state.person}
               />
             </div>
           }
-
-          {/*</GameBoard>*/}
-
         </div>
     );  
   } 
