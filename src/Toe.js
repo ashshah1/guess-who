@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Game from './Game';
-import Board from './Board';
 import PubNubReact from 'pubnub-react';
 import Swal from "sweetalert2";  
 import shortid  from 'shortid';
-import './Game.css';
+import GamePlay from "./GamePlay";
+
  
-class App extends Component {
-  constructor(props) {  
+class Toe extends Component {
+  constructor(props) {
     super(props);
     this.pubnub = new PubNubReact({
       publishKey: "pub-c-885874fe-b734-481e-9c92-500e37e5aaa0",
@@ -20,6 +20,7 @@ class App extends Component {
       isRoomCreator: false,
       isDisabled: false,
       myTurn: false,
+      names: this.props.location.state.names
     };
 
     this.lobbyChannel = null;
@@ -46,9 +47,18 @@ class App extends Component {
   componentDidUpdate() {
     // Check that the player is connected to a channel
     if(this.lobbyChannel != null){
+      // listener for all incoming messages
       this.pubnub.getMessage(this.lobbyChannel, (msg) => {
         // Start the game once an opponent joins the channel
         if(msg.message.notRoomCreator){
+          // publish board names for opponent's use
+          this.pubnub.publish({
+            message: {
+              names: this.state.names
+            },
+            channel: this.lobbyChannel
+          });
+
           // Create a different channel for the game
           this.gameChannel = 'tictactoegame--' + this.roomId;
 
@@ -58,10 +68,17 @@ class App extends Component {
 
           this.setState({
             isPlaying: true
-          });  
+          });
 
           // Close the modals if they are opened
           Swal.close();
+        } else if (msg.message.names !== undefined) {
+          // Get board names
+          let names = msg.message.names;
+          this.setState({
+            names: names,
+            person: names[Math.floor(Math.random() * 24)]
+          });
         }
       }); 
     }
@@ -100,6 +117,8 @@ class App extends Component {
       isRoomCreator: true,
       isDisabled: true, // Disable the 'Create' button
       myTurn: true, // Room creator makes the 1st move
+
+      person: this.state.names[Math.floor(Math.random() * 24)]
     });   
   }
   
@@ -143,11 +162,12 @@ class App extends Component {
             channels: [this.lobbyChannel],
             withPresence: true
           });
-          
+
           this.setState({
             piece: 'O',
           });  
-          
+
+          // tells other player someone has joined channel
           this.pubnub.publish({
             message: {
               notRoomCreator: true,
@@ -196,56 +216,43 @@ class App extends Component {
     });
   }
   
-  render() {  
-    return (  
-        <div> 
-          <div className="title">
-            <p>React Tic Tac Toe: {this.roomId}</p>
-          </div>
-
+  render() {
+    return (
+        // display lobby or game depending on if game in progress
+        <div>
           {
-            !this.state.isPlaying &&
-            <div className="game">
-              <div className="board">
-                <Board
-                    squares={0}
-                    onClick={index => null}
-                  />  
-                  
-                <div className="button-container">
-                  <button 
-                    className="create-button "
-                    disabled={this.state.isDisabled}
-                    onClick={(e) => this.onPressCreate()}
-                    > Create 
-                  </button>
-                  <button 
-                    className="join-button"
-                    onClick={(e) => this.onPressJoin()}
-                    > Join 
-                  </button>
-                </div>                        
-          
+            (!this.state.isPlaying && this.state.names !== undefined) &&
+              <div>
+                <div className="title">
+                  <p>Lobby - React Tic Tac Toe: {this.roomId}</p>
+                </div>
+                <GamePlay names={this.state.names} playing={false}></GamePlay>
               </div>
-            </div>
           }
 
           {
-            this.state.isPlaying &&
-            <Game 
-              pubnub={this.pubnub}
-              gameChannel={this.gameChannel} 
-              piece={this.state.piece}
-              isRoomCreator={this.state.isRoomCreator}
-              myTurn={this.state.myTurn}
-              xUsername={this.state.xUsername}
-              oUsername={this.state.oUsername}
-              endGame={this.endGame}
-            />
+            (this.state.isPlaying && this.state.names !== undefined) &&
+            <div>
+              <div className="title">
+                <p>Game - React Tic Tac Toe: {this.roomId}</p>
+              </div>
+              <Game
+                  pubnub={this.pubnub}
+                  gameChannel={this.gameChannel}
+                  piece={this.state.piece}
+                  isRoomCreator={this.state.isRoomCreator}
+                  myTurn={this.state.myTurn}
+                  xUsername={this.state.xUsername}
+                  oUsername={this.state.oUsername}
+                  endGame={this.endGame}
+
+                  names={this.state.names}
+              />
+            </div>
           }
         </div>
     );  
   } 
 }
 
-export default App;
+export default Toe;

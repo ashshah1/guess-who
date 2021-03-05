@@ -7,32 +7,32 @@ import './SetUp.css';
 import {Link} from "react-router-dom";
 
 
-function SetUp () {
+function SetUp (props) {
 
-    const SAMPLE_NAMES = ["ash", "claire", "megan"];
-    const [names, setNames] = useState(SAMPLE_NAMES);
-    const addName = (newName) => {
-        let newPerson = newName;
-        let updatedNames = [...names]
-        updatedNames.push(newPerson)
-        setNames(updatedNames);
+    let names = props.names;
+
+    // sets class names for the button to active if the user has reached 24 names
+    let status = true;
+    let variant = "secondary"
+    if (names.length === 24) {
+        status = false;
+        variant = "success";
     }
-
-
 
     return (
         <div>
             <div className="set-up-page">&nbsp;</div>
             <p className="counter">{names.length} / 24 names added</p>
-            <NameList names={names}></NameList>
-            <AddNamesForm addNameCallback={addName}></AddNamesForm>
+            <NameList names={names} removeName={props.removeName}></NameList>
+            <AddNamesForm addNameCallback={props.addName}></AddNamesForm>
             <Link to={{
                 pathname: '/toe',
                 state: {
-                    code: null
+                    code: null,
+                    names: names
                 }
             }}>
-                <Button className="start-button" variant="secondary">start game</Button>
+                <Button className="start-button" variant={variant} disabled={status}>start game</Button>
             </Link>
         </div>
     )

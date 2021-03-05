@@ -1,34 +1,38 @@
 import React from 'react';
-import Board from './Board';
-import Swal from "sweetalert2";  
+import Swal from "sweetalert2";
+import GamePlay from "./GamePlay";
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(''), // 3x3 board
       xScore: 0,
       oScore: 0,
-      whosTurn: this.props.myTurn
+      whosTurn: this.props.myTurn,
+      names: this.props.names,
+      person: this.props.names[Math.floor(Math.random() * 24)]
     };
 
     this.turn = 'X';
     this.gameOver = false;
-    this.counter = 0;
   }
 
   componentDidMount(){
+    // get moves
     this.props.pubnub.getMessage(this.props.gameChannel, (msg) => {
       // Publish move to the opponent's board
-      if(msg.message.turn === this.props.piece){
-        this.publishMove(msg.message.index, msg.message.piece);
+      if(msg.message.turn === this.props.piece) {
+        this.publishQuestion(msg.message.guess, msg.message.piece);
+      } else if (msg.message.winner !== undefined) {
+        this.announceWinner(msg.message.winner);
       }
 
       // Start a new round
       else if(msg.message.reset){
         this.setState({
           squares: Array(9).fill(''),
-          whosTurn : this.props.myTurn
+          whosTurn : this.props.myTurn,
+          person: this.state.names[Math.floor(Math.random() * 24)]
         });
 
         this.turn = 'X';
@@ -110,7 +114,7 @@ class Game extends React.Component {
     }
    }
 
-	// Update score for the winner
+  // Update score for the winner
   announceWinner = (winner) => {
 		let pieces = {
 			'X': this.state.xScore,
@@ -134,107 +138,66 @@ class Game extends React.Component {
 		this.newRound(winner);	
   }
   
-  checkForWinner = (squares) => {
-    // Possible winning combinations
-    const possibleCombinations = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-  
-    // Iterate every combination to see if there is a match
-    for (let i = 0; i < possibleCombinations.length; i += 1) {
-      const [a, b, c] = possibleCombinations[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        this.announceWinner(squares[a]);
-        return;
-      }
-    }
-
-    // Check if the game ends in a draw
-    this.counter++;
-    // The board is filled up and there is no winner
-    if(this.counter === 9){
-      this.gameOver = true;
-      this.newRound(null);
+  checkForWinner = (guess) => {
+    if (guess === this.state.person) {
+      let winner = (this.props.piece === 'X') ? 'O' : 'X';
+      // send winner to opponent
+      this.props.pubnub.publish({
+        message: {
+          winner: winner
+        },
+        channel: this.props.gameChannel
+      });
+      this.announceWinner(winner);
     }
   };
    
-  // Opponent's move is published to the board
-  publishMove = (index, piece) => {
-    const squares = this.state.squares;
-
-    squares[index] = piece;
-    this.turn = (squares[index] === 'X')? 'O' : 'X';
+  // Opponent's question is published to game
+  publishQuestion = (guess, piece) => {
+    this.turn = (piece === 'X')? 'O' : 'X';
 
     this.setState({
-      squares: squares,
       whosTurn: !this.state.whosTurn
     });
 
-    this.checkForWinner(squares)
+    this.checkForWinner(guess);
   }
 
-  onMakeMove = (index) =>{
-    const squares = this.state.squares;
-
-    // Check if the square is empty and if it's the player's turn to make a move
-    if(!squares[index] && (this.turn === this.props.piece)){ 
-      squares[index] = this.props.piece;
-
+  // handle making a guess
+  onGuess = (guess) => {
+    if(this.turn === this.props.piece) {
       this.setState({
-        squares: squares,
         whosTurn: !this.state.whosTurn
       });
-  
+
       // Other player's turn to make a move
       this.turn = (this.turn === 'X') ? 'O' : 'X';
 
-      // Publish move to the channel
+      // send guess to opponent
       this.props.pubnub.publish({
         message: {
-          index: index,
+          guess: guess,
           piece: this.props.piece,
           turn: this.turn
         },
         channel: this.props.gameChannel
-      });  
-
-      // Check if there is a winner
-      this.checkForWinner(squares)
+      });
     }
-  }
+
+  };
 
   render() {
     let status;
     // Change to current player's turn
     status = `${this.state.whosTurn ? "Your turn" : "Opponent's turn"}`;
 
+    // let names = this.props.names !== undefined ? this.props.names : [];
     return (
-      <div className="game">
-        <div className="board">
-          <Board
-              squares={this.state.squares}
-              onClick={index => this.onMakeMove(index)}
-            />  
-            <p className="status-info">{status}</p>        
+        <div>
+          <GamePlay names={this.props.names} onClick={guess => this.onGuess(guess)} playing={true}></GamePlay>
+          <p>YOUR PERSON: {this.state.person}</p>
+          <p className="status-info">{status}</p>
         </div>
-        
-        <div className="scores-container">
-          <div>
-            <p>Player X: {this.state.xScore} </p>
-          </div>
-
-          <div>
-            <p>Player O: {this.state.oScore} </p>
-          </div>
-        </div>   
-      </div>
     );
   }
 }

@@ -1,0 +1,25 @@
+.card-container {
+    background-color: white;
+    width: 6rem;
+    height: 6rem;
+    margin: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 0.5rem;
+}
+
+.guess {
+    background-color: #39AE4B;
+    border-radius: 3px;
+    margin-left: 0.4rem;
+    margin-right: 0.4rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.card-container:hover {
+    width: 6.5rem;
+    height: 6.5rem;
+}
