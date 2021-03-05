@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 function LandingPage() {
     let history = useHistory();
-    const [code, setCode] = useState(0);
+    const [code, setCode] = useState("");
 
     function onJoinSubmit(e) {
         history.push({
