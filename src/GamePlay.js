@@ -7,17 +7,28 @@ function GamePlay(props) {
 
     let names = props.names;
 
-    return (
-        <div>
-            <div className="game-play-page">&nbsp;</div>
-            <GameBoard names={names} onClick={props.onClick}></GameBoard>
-            <div className="chat">&nbsp;</div>
-            
-            <Link to="/">
-                <Button className="quit-button" variant="danger">quit game</Button>
-            </Link>
-        </div>
-    )
+    if (props.playing) {
+        return (
+            <div>
+                <div className="game-play-page">&nbsp;</div>
+                <GameBoard names={names} onClick={props.onClick} status={props.status}></GameBoard>
+                
+                <Link to="/">
+                    <Button className="quit-button" variant="danger">quit game</Button>
+                </Link>
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <div className="game-play-page">&nbsp;</div>    
+                <p className="typewriter">waiting for opponent to join</p>          
+                <Link to="/">
+                    <Button className="quit-button" variant="danger">quit game</Button>
+                </Link>
+            </div>
+        )
+    }
 }
 
 export default GamePlay;

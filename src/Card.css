@@ -1,11 +1,16 @@
 .card-container {
     background-color: white;
-    width: 6rem;
-    height: 6rem;
+    width: 7rem;
+    height: 7rem;
     margin: 1rem;
     border-radius: 5px;
     text-align: center;
     padding-top: 0.5rem;
+}
+
+.card-container p {
+    text-align: center;
+    font-size: 1.2rem;
 }
 
 .guess {
@@ -22,4 +27,9 @@
 .card-container:hover {
     width: 6.5rem;
     height: 6.5rem;
+}
+
+.decor {
+    text-decoration: line-through;
+    color: gray;
 }

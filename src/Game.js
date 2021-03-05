@@ -2,6 +2,8 @@ import React from 'react';
 import Swal from "sweetalert2";
 import GamePlay from "./GamePlay";
 
+import './GamePlay.css';
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -191,12 +193,20 @@ class Game extends React.Component {
     // Change to current player's turn
     status = `${this.state.whosTurn ? "Your turn" : "Opponent's turn"}`;
 
+    let currStatus;
+    if (status === "Your turn") {
+      currStatus = "green";
+    } else {
+      currStatus = "red";
+    }
+
     // let names = this.props.names !== undefined ? this.props.names : [];
     return (
         <div>
-          <GamePlay names={this.props.names} onClick={guess => this.onGuess(guess)} playing={true}></GamePlay>
-          <p>YOUR PERSON: {this.state.person}</p>
-          <p className="status-info">{status}</p>
+          <p className="status-info" style={{color: currStatus}}>{status}</p>
+          <GamePlay names={this.props.names} onClick={guess => this.onGuess(guess)} playing={true} status={status}></GamePlay>
+          <p className="your-person">{this.state.person}</p>
+          <p className="guess-descrip">this is who your opponent is trying to guess</p>
         </div>
     );
   }
