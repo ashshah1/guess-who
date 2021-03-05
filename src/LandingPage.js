@@ -12,7 +12,7 @@ function LandingPage() {
 
     function onJoinSubmit(e) {
         history.push({
-            pathname: '/toe',
+            pathname: '/lobby',
             state: {code: code}
         });
     }

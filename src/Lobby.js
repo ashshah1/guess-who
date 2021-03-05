@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import Game from './Game';
+import GameController from './GameController';
 import { Redirect } from "react-router-dom";
 import PubNubReact from 'pubnub-react';
 import Swal from "sweetalert2";  
 import shortid  from 'shortid';
-import GamePlay from "./GamePlay";
+import Game from "./Game";
+// import uuid from 'react-uuid'
+import './Game.css';
 
-import './GamePlay.css';
-class Toe extends Component {
+class Lobby extends Component {
     constructor(props) {
         super(props);
+        // use for testing purposed to simulate different users on local host
+        // let myUUID = uuid();
         this.pubnub = new PubNubReact({
             publishKey: "pub-c-885874fe-b734-481e-9c92-500e37e5aaa0",
             subscribeKey: "sub-c-d3a9aef4-7bb7-11eb-8096-3e6ae84b74ea"
+            // uuid: myUUID
         });
 
         this.state = {
@@ -135,12 +139,12 @@ class Toe extends Component {
 
         // Check the number of people in the channel
         this.pubnub.hereNow({
-          channels: [this.lobbyChannel],
+            channels: [this.lobbyChannel],
         }).then((response) => {
             if(response.totalOccupancy < 2){
                 this.pubnub.subscribe({
-                      channels: [this.lobbyChannel],
-                      withPresence: true
+                    channels: [this.lobbyChannel],
+                    withPresence: true
                 });
 
                 this.setState({
@@ -169,7 +173,8 @@ class Toe extends Component {
                         popup: 'popup-class',
                         confirmButton: 'button-class'
                     }
-                })
+                });
+                this.setState({inProgress: true})
             }
         }).catch((error) => {
           console.log(error);
@@ -203,36 +208,48 @@ class Toe extends Component {
             );
         }
 
-        return (
-            // display lobby or game depending on if game in progress
-            <div>
-                {(!this.state.isPlaying && this.state.names !== undefined) &&
-                    <div>
-                        <div className="title">
-                            <p className="room-code">room code: {this.roomId}</p>
-                        </div>
-                        <GamePlay names={this.state.names} playing={false}></GamePlay>
+        // display lobby if waiting for opponent
+        if (!this.state.isPlaying && this.state.isRoomCreator) {
+            return (
+                <div>
+                    <div className="title">
+                        <p className="room-code">room code: {this.roomId}</p>
                     </div>
-                }
+                    <Game names={this.state.names} host={true} playing={false}></Game>
+                </div>
+            );
+        }
 
-                {(this.state.isPlaying && this.state.names !== undefined) &&
-                    <div>
-                        <div className="title">
-                    </div>
-                    <Game
-                        pubnub={this.pubnub}
-                        gameChannel={this.gameChannel}
-                        player={this.state.player}
-                        names={this.state.names}
-                        isRoomCreator={this.state.isRoomCreator}
-                        myTurn={this.state.myTurn}
-                        endGame={this.endGame}
-                    />
-                    </div>
-              }
-            </div>
+        // display loading board if waiting for names to be received
+        if (this.state.isPlaying && this.state.names === undefined) {
+            return (
+                <div>
+                    <p className="room-code">&nbsp;</p>
+                    <Game names={this.state.names} host={false} playing={false}></Game>
+                </div>
+            );
+        }
+
+        // display game if playing and names for board have loaded
+        if (this.state.isPlaying && this.state.names !== undefined) {
+            return (
+                <GameController
+                    pubnub={this.pubnub}
+                    gameChannel={this.gameChannel}
+                    player={this.state.player}
+                    names={this.state.names}
+                    isRoomCreator={this.state.isRoomCreator}
+                    myTurn={this.state.myTurn}
+                    endGame={this.endGame}
+                />
+            )
+        }
+
+        // display lobby or game depending on if game in progress
+        return (
+            <div></div>
         );
     }
 }
 
-export default Toe;
+export default Lobby;

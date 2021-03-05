@@ -26,7 +26,7 @@ function SetUp (props) {
             <NameList names={names} removeName={props.removeName}></NameList>
             <AddNamesForm addNameCallback={props.addName}></AddNamesForm>
             <Link to={{
-                pathname: '/toe',
+                pathname: '/lobby',
                 state: {
                     code: null,
                     names: names

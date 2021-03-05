@@ -5,8 +5,8 @@ import LandingPage from './LandingPage.js';
 import About from './About.js';
 import Privacy from './Privacy.js';
 import HowToPlay from './HowToPlay.js';
-import Toe from './Toe.js';
-import GamePlay from './GamePlay.js';
+import Lobby from './Lobby.js';
+import Game from './Game.js';
 import SetUp from './SetUp.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -49,12 +49,12 @@ function App() {
           <Route path="/privacy" component={Privacy} />
           <Route path="/how" component={HowToPlay}/>
           <Route exact path="/" component={LandingPage} />
-          <Route path="/toe" component={Toe} />
+          <Route path="/lobby" component={Lobby} />
           <Route path="/prep">
             <SetUp names={names} addName={addName} removeName={removeName}/>
           </Route>
           <Route path="/play">
-            <GamePlay names={names}/>
+            <Game names={names}/>
           </Route>
 
         </Switch>
