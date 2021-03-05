@@ -4,6 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import background from "./images/landing-bg.png";
 import React, { useState } from 'react';
 
+
+
 function LandingPage() {
     let history = useHistory();
     const [code, setCode] = useState(0);
@@ -24,7 +26,7 @@ function LandingPage() {
                         <form  onSubmit={onJoinSubmit}>
                             <label>
                                 <input
-                                    type="text"
+                                    id="room"
                                     name="code"
                                     onChange={(e) => setCode(e.target.value)}
                                     placeholder="ENTER ROOM CODE">

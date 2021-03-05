@@ -15,18 +15,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
-  // const { location: { pathname } } = props;
-  // let params = useLocation();
-  // console.log(params);
 
-  const SAMPLE_NAMES = ["ash", "megan", "claire"];
+
+  const SAMPLE_NAMES = ["ash", "megan", "claire", "sean", "jacob", "bo", "ariel from cse 442", "cornelius", "maverick", "grant ward", "ambulance", "candle", "squiggle"];
 
   const [names, setNames] = useState(SAMPLE_NAMES);
+
+    // Adds a new name to the array, updated list of names is saved as "names" and can be passed to other components
     const addName = (newName) => {
         let newPerson = newName;
         let updatedNames = [...names]
         updatedNames.push(newPerson)
         setNames(updatedNames);
+    }
+
+    // Removes name from the names array and updates the list, triggered by clicking on a name 
+    const removeName = (cutName) => {
+      let index = names.indexOf(cutName);
+      let updatedNames = [...names]
+      if (index !== -1) {
+        updatedNames.splice(index, 1);
+      }
+      setNames(updatedNames);
     }
 
   return (
@@ -43,7 +53,7 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/toe" component={Toe} />
           <Route path="/prep">
-            <SetUp names={names} addName={addName}/>
+            <SetUp names={names} addName={addName} removeName={removeName}/>
           </Route>
           <Route path="/play">
             <GamePlay names={names}/>
