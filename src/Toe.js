@@ -8,262 +8,231 @@ import GamePlay from "./GamePlay";
 
 import './GamePlay.css';
 class Toe extends Component {
-  constructor(props) {
-    super(props);
-    this.pubnub = new PubNubReact({
-      publishKey: "pub-c-885874fe-b734-481e-9c92-500e37e5aaa0",
-      subscribeKey: "sub-c-d3a9aef4-7bb7-11eb-8096-3e6ae84b74ea"
-    });
+    constructor(props) {
+        super(props);
+        this.pubnub = new PubNubReact({
+            publishKey: "pub-c-885874fe-b734-481e-9c92-500e37e5aaa0",
+            subscribeKey: "sub-c-d3a9aef4-7bb7-11eb-8096-3e6ae84b74ea"
+        });
 
-    this.state = {
-      piece: '',
-      isPlaying: false,
-      isRoomCreator: false,
-      isDisabled: false,
-      myTurn: false,
-      gameEnded: false,
-      names: (this.props.location.state !== undefined) ? this.props.location.state.names : null
-    };
+        this.state = {
+            player: null,
+            isPlaying: false,
+            isRoomCreator: false,
+            myTurn: false,
+            gameEnded: false,
+            names: (this.props.location.state !== undefined) ?
+                this.props.location.state.names : null
+        };
 
-    this.lobbyChannel = null;
-    this.gameChannel = null;
-    this.roomId = null;
-    this.pubnub.init(this);
+        this.lobbyChannel = null;
+        this.gameChannel = null;
+        this.roomId = null;
+        this.pubnub.init(this);
 
-  }
-  componentDidMount() {
-    // create or join room one board loads
-    if (this.props.location.state !== undefined) {
-        if (this.props.location.state.code === null) {
-            this.onPressCreate();
-        } else {
-            this.joinRoom(this.props.location.state.code);
+    }
+
+    // Create or join lobby
+    componentDidMount() {
+        // create or join room one board loads
+        if (this.props.location.state !== undefined) {
+            if (this.props.location.state.code === null) {
+                this.onPressCreate();
+            } else {
+                this.joinRoom(this.props.location.state.code);
+            }
         }
     }
-  }
 
-  componentWillUnmount() {
-    this.pubnub.unsubscribe({
-      channels : [this.lobbyChannel, this.gameChannel]
-    });
-  }
-  
-  componentDidUpdate() {
-    // Check that the player is connected to a channel
-    if(this.lobbyChannel != null){
-      // listener for all incoming messages
-      this.pubnub.getMessage(this.lobbyChannel, (msg) => {
-        // Start the game once an opponent joins the channel
-        if(msg.message.notRoomCreator){
-          // publish board names for opponent's use
-          this.pubnub.publish({
-            message: {
-              names: this.state.names
-            },
-            channel: this.lobbyChannel
-          });
+    // Leave channels
+    componentWillUnmount() {
+        this.pubnub.unsubscribe({
+            channels : [this.lobbyChannel, this.gameChannel]
+        });
+    }
 
-          // Create a different channel for the game
-          this.gameChannel = 'tictactoegame--' + this.roomId;
+    // Listen for incoming messages (opponent joined, board names received)
+    componentDidUpdate() {
+        // Check that the player is connected to a channel
+        if(this.lobbyChannel != null){
+            // listener for all incoming messages
+            this.pubnub.getMessage(this.lobbyChannel, (msg) => {
+                // start the game once an opponent joins the channel
+                if(msg.message.notRoomCreator){
+                    // publish board names for opponent's use
+                    this.pubnub.publish({
+                      message: {
+                        names: this.state.names
+                      },
+                      channel: this.lobbyChannel
+                    });
 
-          this.pubnub.subscribe({
-            channels: [this.gameChannel]
-          });
+                    // create a different channel for the game
+                    this.gameChannel = 'tictactoegame--' + this.roomId;
 
-          this.setState({
-            isPlaying: true
-          });
+                    this.pubnub.subscribe({
+                      channels: [this.gameChannel]
+                    });
 
-          // Close the modals if they are opened
-          Swal.close();
-        } else if (msg.message.names !== undefined) {
-          // Get board names
-          let names = msg.message.names;
-          this.setState({
-            names: names,
-            person: names[Math.floor(Math.random() * 24)]
-          });
+                    this.setState({
+                      isPlaying: true
+                    });
+
+                    // close the modals if they are opened
+                    Swal.close();
+                } else if (msg.message.names !== undefined) {
+                    // get board names
+                    let names = msg.message.names;
+                    this.setState({
+                        names: names,
+                        person: names[Math.floor(Math.random() * 24)]
+                    });
+                }
+            });
         }
-      }); 
     }
-  }
 
-  // Create a room channel
-  onPressCreate = (e) => {
-    // Create a random name for the channel
-    this.roomId = shortid.generate().substring(0,5);
-    this.lobbyChannel = 'tictactoelobby--' + this.roomId;
+    // Create a room channel
+    onPressCreate = (e) => {
+        // Create a random name for the channel
+        this.roomId = shortid.generate().substring(0,5);
+        this.lobbyChannel = 'tictactoelobby--' + this.roomId;
 
-    this.pubnub.subscribe({
-      channels: [this.lobbyChannel],
-      withPresence: true
-    });
-
-  // Open the modal
-  Swal.fire({
-    position: 'top',
-    allowOutsideClick: false,
-    title: 'Share this room ID with your friend',
-    text: this.roomId,
-    width: 275,
-    padding: '0.7em',
-    // Custom CSS
-    customClass: {
-        heightAuto: false,
-        title: 'title-class',
-        popup: 'popup-class',
-        confirmButton: 'button-class'
-    }
-  })
-
-    this.setState({
-      piece: 'X',
-      isRoomCreator: true,
-      isDisabled: true, // Disable the 'Create' button
-      myTurn: true, // Room creator makes the 1st move
-
-      person: this.state.names[Math.floor(Math.random() * 24)]
-    });   
-  }
-  
-  // The 'Join' button was pressed
-  onPressJoin = (e) => {
-    Swal.fire({
-      position: 'top',
-      input: 'text',
-      allowOutsideClick: false,
-      inputPlaceholder: 'Enter the room id',
-      showCancelButton: true,
-      confirmButtonColor: 'rgb(208,33,41)',
-      confirmButtonText: 'OK',
-      width: 275,
-      padding: '0.7em',
-      customClass: {
-        heightAuto: false,
-        popup: 'popup-class',
-        confirmButton: 'join-button-class ',
-        cancelButton: 'join-button-class'
-      } 
-    }).then((result) => {
-      // Check if the user typed a value in the input field
-      if(result.value){
-        this.joinRoom(result.value);
-      }
-    })
-  }
-
-  // Join a room channel
-  joinRoom = (value) => {
-    this.roomId = value;
-    this.lobbyChannel = 'tictactoelobby--' + this.roomId;
-
-    // Check the number of people in the channel
-    this.pubnub.hereNow({
-      channels: [this.lobbyChannel], 
-    }).then((response) => { 
-        if(response.totalOccupancy < 2){
-          this.pubnub.subscribe({
+        this.pubnub.subscribe({
             channels: [this.lobbyChannel],
             withPresence: true
-          });
+        });
 
-          this.setState({
-            piece: 'O',
-          });  
-
-          // tells other player someone has joined channel
-          this.pubnub.publish({
-            message: {
-              notRoomCreator: true,
-            },
-            channel: this.lobbyChannel
-          });
-        } 
-        else{
-          // Game in progress
-          Swal.fire({
+        // Open the modal
+        Swal.fire({
             position: 'top',
             allowOutsideClick: false,
-            title: 'Error',
-            text: 'Game in progress. Try another room.',
+            title: 'Share this room ID with your friend',
+            text: this.roomId,
             width: 275,
             padding: '0.7em',
+            // Custom CSS
             customClass: {
                 heightAuto: false,
                 title: 'title-class',
                 popup: 'popup-class',
                 confirmButton: 'button-class'
             }
-          })
-        }
-    }).catch((error) => { 
-      console.log(error);
-    });
-  }
+        });
 
-  // Reset everything
-  endGame = () => {
-    this.setState({
-      piece: '',
-      isPlaying: false,
-      isRoomCreator: false,
-      isDisabled: false,
-      myTurn: false,
-      gameEnded: true
-    });
+        this.setState({
+            player: 1,
+            isRoomCreator: true,
+            myTurn: true, // Room creator makes the 1st move
+            person: this.state.names[Math.floor(Math.random() * 24)]
+        });
+    };
 
-    this.lobbyChannel = null;
-    this.gameChannel = null;
-    this.roomId = null;  
+    // Join a room channel
+    joinRoom = (value) => {
+        this.roomId = value;
+        this.lobbyChannel = 'tictactoelobby--' + this.roomId;
 
-    this.pubnub.unsubscribe({
-      channels : [this.lobbyChannel, this.gameChannel]
-    });
-  }
+        // Check the number of people in the channel
+        this.pubnub.hereNow({
+          channels: [this.lobbyChannel],
+        }).then((response) => {
+            if(response.totalOccupancy < 2){
+                this.pubnub.subscribe({
+                      channels: [this.lobbyChannel],
+                      withPresence: true
+                });
+
+                this.setState({
+                    player: 2,
+                });
+
+                // tells other player someone has joined channel
+                this.pubnub.publish({
+                    message: {
+                        notRoomCreator: true,
+                    },
+                    channel: this.lobbyChannel
+                });
+            } else {
+                // Game in progress
+                Swal.fire({
+                    position: 'top',
+                    allowOutsideClick: false,
+                    title: 'Error',
+                    text: 'Game in progress. Try another room.',
+                    width: 275,
+                    padding: '0.7em',
+                    customClass: {
+                        heightAuto: false,
+                        title: 'title-class',
+                        popup: 'popup-class',
+                        confirmButton: 'button-class'
+                    }
+                })
+            }
+        }).catch((error) => {
+          console.log(error);
+        });
+    };
+
+    // Reset everything
+    endGame = () => {
+        this.setState({
+            player: null,
+            isPlaying: false,
+            isRoomCreator: false,
+            myTurn: false,
+            gameEnded: true
+        });
+
+        this.lobbyChannel = null;
+        this.gameChannel = null;
+        this.roomId = null;
+
+        this.pubnub.unsubscribe({
+            channels : [this.lobbyChannel, this.gameChannel]
+        });
+    };
   
-  render() {
-      // navigate to home if user did not navigate to page correctly
-      if (this.props.location.state === undefined || this.state.gameEnded) {
-          return (
-            <Redirect to="/"/>
-          );
-      }
-    return (
-        // display lobby or game depending on if game in progress
-        <div>
-          {
-            (!this.state.isPlaying && this.state.names !== undefined) &&
-              <div>
-                <div className="title">
-                  <p className="room-code">room code: {this.roomId}</p>
-                </div>
-                <GamePlay names={this.state.names} playing={false}></GamePlay>
-              </div>
-          }
+    render() {
+        // navigate to home if user did not navigate to page correctly
+        if (this.props.location.state === undefined || this.state.gameEnded) {
+            return (
+                <Redirect to="/"/>
+            );
+        }
 
-          {
-            (this.state.isPlaying && this.state.names !== undefined) &&
+        return (
+            // display lobby or game depending on if game in progress
             <div>
-              <div className="title">
-                {/* <p className="active-room">Game - React Tic Tac Toe: {this.roomId}</p> */}
-              </div>
-              <Game
-                  pubnub={this.pubnub}
-                  gameChannel={this.gameChannel}
-                  piece={this.state.piece}
-                  isRoomCreator={this.state.isRoomCreator}
-                  myTurn={this.state.myTurn}
-                  xUsername={this.state.xUsername}
-                  oUsername={this.state.oUsername}
-                  endGame={this.endGame}
+                {(!this.state.isPlaying && this.state.names !== undefined) &&
+                    <div>
+                        <div className="title">
+                            <p className="room-code">room code: {this.roomId}</p>
+                        </div>
+                        <GamePlay names={this.state.names} playing={false}></GamePlay>
+                    </div>
+                }
 
-                  names={this.state.names}
-              />
+                {(this.state.isPlaying && this.state.names !== undefined) &&
+                    <div>
+                        <div className="title">
+                    </div>
+                    <Game
+                        pubnub={this.pubnub}
+                        gameChannel={this.gameChannel}
+                        player={this.state.player}
+                        names={this.state.names}
+                        isRoomCreator={this.state.isRoomCreator}
+                        myTurn={this.state.myTurn}
+                        endGame={this.endGame}
+                    />
+                    </div>
+              }
             </div>
-          }
-        </div>
-    );  
-  } 
+        );
+    }
 }
 
 export default Toe;

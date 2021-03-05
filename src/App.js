@@ -1,13 +1,11 @@
 import './App.css';
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route, Link, useLocation } from "react-router-dom";
 import LandingPage from './LandingPage.js';
 import About from './About.js';
 import Privacy from './Privacy.js';
 import HowToPlay from './HowToPlay.js';
 import Toe from './Toe.js';
-import Game from './Game.js';
 import GamePlay from './GamePlay.js';
 import SetUp from './SetUp.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
