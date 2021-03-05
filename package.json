@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "autoprefixer": "^9.8.6",
     "bootstrap": "^4.6.0",
+    "firebase": "^8.2.10",
     "pubnub": "^4.29.11",
     "pubnub-react": "^1.3.2",
     "react": "^17.0.1",

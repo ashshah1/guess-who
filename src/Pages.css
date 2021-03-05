@@ -1,0 +1,60 @@
+.privacy-page {
+    background-color: #DC8B41;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.about-page {
+    background-color: #4F209B;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.how-to-page {
+    background-color: #188E24;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.disclaimer {
+    font-style: italic;
+}
+
+.page-header {
+    font-family: "Montserrat";
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+}
+
+.step {
+    font-family: "Montserrat";
+    color: black;
+    margin-left: 6rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.descrip {
+    font-family: "Montserrat";
+    color: white;
+    margin: 1rem 6rem 1rem 6rem;
+    font-size: 1.5rem;
+}
+
+
+
