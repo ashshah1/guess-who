@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Game from './Game';
+import { Redirect } from "react-router-dom";
 import PubNubReact from 'pubnub-react';
 import Swal from "sweetalert2";  
 import shortid  from 'shortid';
@@ -20,7 +21,7 @@ class Toe extends Component {
       isRoomCreator: false,
       isDisabled: false,
       myTurn: false,
-      names: this.props.location.state.names
+      names: (this.props.location.state !== undefined) ? this.props.location.state.names : null
     };
 
     this.lobbyChannel = null;
@@ -31,10 +32,12 @@ class Toe extends Component {
   }
   componentDidMount() {
     // create or join room one board loads
-    if (this.props.location.state.code === null) {
-      this.onPressCreate();
-    } else {
-      this.joinRoom(this.props.location.state.code);
+    if (this.props.location.state !== undefined) {
+        if (this.props.location.state.code === null) {
+            this.onPressCreate();
+        } else {
+            this.joinRoom(this.props.location.state.code);
+        }
     }
   }
 
@@ -217,6 +220,12 @@ class Toe extends Component {
   }
   
   render() {
+      // navigate to home if user did not navigate to page correctly
+      if (this.props.location.state === undefined) {
+          return (
+            <Redirect to="/"/>
+          );
+      }
     return (
         // display lobby or game depending on if game in progress
         <div>
