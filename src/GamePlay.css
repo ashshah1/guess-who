@@ -14,3 +14,40 @@
     right: 0px; 
     margin: 5rem;
 }
+
+.your-person {
+    font-size: 2rem;
+    color: white;
+    margin-left: 4rem;
+    font-weight: 600;
+  }
+  
+.guess-descrip {
+    font-style: italic;
+    margin-left: 4rem;
+}
+
+.status-info {
+    color:white;
+    font-size: 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 5rem;
+    margin-right: 2rem;
+     
+}
+
+.room-code {
+    color: white;
+    font-size: 2rem;
+    margin-top: 10rem;
+    margin-left: 2rem;
+    text-align: center;
+}
+
+.typewriter {
+    text-align: center;
+    color: white;
+    font-size: 4rem;
+}

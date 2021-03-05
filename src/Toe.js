@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import shortid  from 'shortid';
 import GamePlay from "./GamePlay";
 
- 
+import './GamePlay.css';
 class Toe extends Component {
   constructor(props) {
     super(props);
@@ -224,7 +224,7 @@ class Toe extends Component {
             (!this.state.isPlaying && this.state.names !== undefined) &&
               <div>
                 <div className="title">
-                  <p>Lobby - React Tic Tac Toe: {this.roomId}</p>
+                  <p className="room-code">room code: {this.roomId}</p>
                 </div>
                 <GamePlay names={this.state.names} playing={false}></GamePlay>
               </div>
@@ -234,7 +234,7 @@ class Toe extends Component {
             (this.state.isPlaying && this.state.names !== undefined) &&
             <div>
               <div className="title">
-                <p>Game - React Tic Tac Toe: {this.roomId}</p>
+                {/* <p className="active-room">Game - React Tic Tac Toe: {this.roomId}</p> */}
               </div>
               <Game
                   pubnub={this.pubnub}

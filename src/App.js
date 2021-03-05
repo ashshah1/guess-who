@@ -85,12 +85,6 @@ const NavBar  = () => {
           <li>
             <Link to="/privacy" className="nav-link">Privacy Policy</Link>
           </li>
-          <li>
-            <Link to="/toe" className="nav-link">Tic Tac Toe</Link>
-          </li>
-          <li>
-            <Link to="/play" className="nav-link">Play!</Link>
-          </li>
         </ul>
       </nav>
   )
