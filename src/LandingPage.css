@@ -69,13 +69,13 @@
     font-weight: 800;
 }
 
-.launch-container .btn-join {
+.btn-join {
     border: 1px solid #FDD55C;
     background-color: #FDD55C;
-    color: #fff;
+    color: #fff !important;
 }
 
-.launch-container .btn-join:hover {
+.btn-join:hover, .btn-join:focus, .btn-join:active {
     border: 1px solid #FDD55C;
     background-color: #edc651;
 }

@@ -8,13 +8,28 @@ import React, { useState } from 'react';
 
 function LandingPage() {
     let history = useHistory();
-    const [code, setCode] = useState(0);
+    const [code, setCode] = useState("");
 
-    function onJoinSubmit(event) {
+    function onJoinSubmit(e) {
         history.push({
             pathname: '/toe',
             state: {code: code}
         });
+    }
+
+    // Return disabled button if code entered is not correct length
+    const getJoinButton = () => {
+        if (code.length !== 5) {
+            return (<Button type="submit" variant="warning" className="btn btn-join" disabled>JOIN GAME</Button>);
+        } else {
+            return (<Button type="submit" variant="warning" className="btn btn-join">JOIN GAME</Button>);
+        }
+    }
+
+    const onInputChange = (e) => {
+        if (e.target.value.length <= 5) {
+            setCode(e.target.value);
+        }
     }
 
     return(
@@ -28,11 +43,12 @@ function LandingPage() {
                                 <input
                                     id="room"
                                     name="code"
-                                    onChange={(e) => setCode(e.target.value)}
+                                    value={code}
+                                    onChange={onInputChange}
                                     placeholder="ENTER ROOM CODE">
                                 </input>
                             </label>
-                            <Button type="submit" className="btn btn-join">JOIN GAME</Button>
+                            {getJoinButton()}
                         </form>
                         <p>or</p>
                         <Link to="/prep">
