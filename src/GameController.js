@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import Game from "./Game";
 
 import './Game.css';
+import AskQuestion from "./AskQuestion";
 
 class GameController extends React.Component {
     constructor(props) {
@@ -25,7 +26,12 @@ class GameController extends React.Component {
         this.props.pubnub.getMessage(this.props.gameChannel, (msg) => {
             if (msg.message.turn === this.props.player) {
                 // Publish move to the opponent's board
-                this.publishQuestion(msg.message.guess, msg.message.player);
+                if (msg.message.guess !== undefined) {
+                    this.publishGuess(msg.message.guess, msg.message.player);
+                } else if (msg.message.question !== undefined) {
+                    this.publishQuestion(msg.message.question, msg.message.player);
+                }
+
             } else if (msg.message.winner !== undefined) {
                 this.announceWinner(msg.message.winner);
             } else if (msg.message.reset) {
@@ -46,6 +52,85 @@ class GameController extends React.Component {
         });
     }
 
+    // toggleTurn = () => {
+    //     // toggle turn
+    //     this.setState({
+    //         whoseTurn: !this.state.whoseTurn
+    //     });
+    //
+    //     this.turn = (this.turn === 1) ? 2 : 1;
+    // };
+
+
+    // Handle making asking a question
+    onQuestion = (question) => {
+        // check it's player's turn
+        if(this.turn === this.props.player) {
+            this.setState({
+                whoseTurn: !this.state.whoseTurn
+            });
+
+            this.turn = (this.turn === 1) ? 2 : 1;
+
+            // send guess to opponent
+            this.props.pubnub.publish({
+                message: {
+                    question: question,
+                    player: this.props.player,
+                    turn: this.turn
+                },
+                channel: this.props.gameChannel
+            });
+        }
+    };
+
+    // Publish opponents question
+    publishQuestion = (question, player) => {
+        // toggle turn
+        this.turn = (player === 1) ? 2 : 1;
+        this.setState({
+            whoseTurn: !this.state.whoseTurn
+        });
+
+        Swal.fire({
+            position: 'top',
+            allowOutsideClick: false,
+            title: question,
+            text: "answer the question about " + this.state.person,
+            showCancelButton: true,
+            confirmButtonColor: 'rgb(208,33,41)',
+            cancelButtonColor: '#aaa',
+            cancelButtonText: 'no',
+            confirmButtonText: 'yes',
+            width: 275,
+            customClass: {
+                heightAuto: false,
+                title: 'title-class',
+                popup: 'popup-class',
+                confirmButton: 'button-class',
+                cancelButton: 'button-class'
+            } ,
+        }).then((result) => {
+            if (result.value) {
+                // send answer to opponent
+                // this.props.pubnub.publish({
+                //     message: {
+                //         reset: true
+                //     },
+                //     channel: this.props.gameChannel
+                // });
+            } else {
+                // End the game
+                // this.props.pubnub.publish({
+                //     message: {
+                //         endGame: true
+                //     },
+                //     channel: this.props.gameChannel
+                // });
+            }
+        })
+    };
+
     // Handle making a guess
     onGuess = (guess) => {
         // check it's player's turn
@@ -54,7 +139,6 @@ class GameController extends React.Component {
                 whoseTurn: !this.state.whoseTurn
             });
 
-            // toggle turn
             this.turn = (this.turn === 1) ? 2 : 1;
 
             // send guess to opponent
@@ -70,7 +154,7 @@ class GameController extends React.Component {
     };
 
     // Publish opponents guess to the board
-    publishQuestion = (guess, player) => {
+    publishGuess = (guess, player) => {
         // toggle turn
         this.turn = (player === 1) ? 2 : 1;
         this.setState({
@@ -193,11 +277,17 @@ class GameController extends React.Component {
         }
 
         return (
-            <div>
-                <p className="status-info" style={{color: currStatus}}>{status}</p>
-                <Game names={this.props.names} onClick={guess => this.onGuess(guess)} playing={true} status={status}></Game>
-                <p className="your-person">{this.state.person}</p>
-                <p className="guess-descrip">this is who your opponent is trying to guess</p>
+            <div className="game-controller">
+                <div>
+                    <p className="room-code">room code: {this.props.roomId}</p>
+                    <Game names={this.props.names} onClick={guess => this.onGuess(guess)} playing={true} status={status}></Game>
+                    <p className="your-person">{this.state.person}</p>
+                    <p className="guess-descrip">this is who your opponent is trying to guess</p>
+                </div>
+                <div>
+                    <p className="status-info" style={{color: currStatus}}>{status}</p>
+                    <AskQuestion onClick={this.onQuestion} disabled={!this.state.whoseTurn}/>
+                </div>
             </div>
         );
     }
