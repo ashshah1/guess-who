@@ -202,7 +202,7 @@ class Lobby extends Component {
   
     render() {
         // navigate to home if user did not navigate to page correctly
-        if (this.props.location.state === undefined || this.state.gameEnded) {
+        if (this.props.location.state === undefined || this.state.gameEnded || this.state.inProgress) {
             return (
                 <Redirect to="/"/>
             );
