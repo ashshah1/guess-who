@@ -1,0 +1,31 @@
+.newsfeed {
+    border-radius: 10px;
+    background-color: #fff;
+    flex: 2 1 auto;
+    height: 70%;
+
+    /*display: flex;*/
+    /*padding: 5px;*/
+}
+
+.news-title, .neither-update {
+    text-align: center;
+}
+
+.update-container {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    max-height: 90%;
+    margin: .5rem;
+}
+
+.my-update {
+    text-align: right;
+    color: #ED553B;
+}
+
+.their-update {
+    text-align: left;
+    color: #FDD55C;
+}
