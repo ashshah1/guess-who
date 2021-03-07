@@ -11,6 +11,10 @@
     padding: 1rem;
 }
 
+.news-title {
+    font-size: 1.5rem;
+}
+
 .update-container {
     flex: 1 1 auto;
     overflow-y: auto;
@@ -22,11 +26,23 @@
 .my-update {
     text-align: right;
     margin-right: 1rem;
-    color: #ED553B;
+    padding-bottom: 0.5rem;
+    color: black;
 }
 
 .their-update {
     text-align: left;
     margin-left: 1rem;
-    color: #FDD55C;
+    padding-bottom: 0.5rem;
+    color: black;
+}
+
+.personal {
+    font-size: 1.2rem;
+    color: cadetblue;
+}
+
+.opponent {
+    font-size: 1.2rem;
+    color: forestgreen;
 }

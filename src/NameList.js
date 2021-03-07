@@ -1,7 +1,27 @@
 import './NameList.css';
 
+import { useState } from 'react'
+
 function NameElem(props) {
-let name = props.name;
+    const [isShown, setIsShown] = useState(false);
+
+    let name = props.name;
+
+    const onEnter = () => {
+        setIsShown(true);
+    }
+
+    // once mouse leaves, update state to hide guess button
+    const onLeave = () => {
+        setIsShown(false)
+    }
+
+    let personas = "personas";
+    // if card is hovered on, reveal guess button
+    if (isShown) {
+        personas = "personas line-through zoom";
+    }
+
 
     // lets user click on a name to remove it
     const handleClick = (event) => {
@@ -9,7 +29,7 @@ let name = props.name;
     }
         
     return (
-        <p className="personas" onClick={handleClick}>{props.name}</p>
+        <p className={personas} onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>{props.name}</p>
     )
 }
 

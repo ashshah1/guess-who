@@ -35,7 +35,7 @@ class GameController extends React.Component {
                 }
             } else if (msg.message.answer !== undefined && msg.message.player !== this.props.player) {
                 // Get opponent's answer
-                this.addUpdate("they answered " + msg.message.answer, "them");
+                this.addUpdate(msg.message.answer, "them");
             } else if (msg.message.winner !== undefined && msg.message.player !== this.props.player) {
                 this.announceWinner(msg.message.winner);
             } else if (msg.message.reset) {
@@ -88,7 +88,7 @@ class GameController extends React.Component {
             whoseTurn: !this.state.whoseTurn
         });
 
-        this.addUpdate("they asked '" + question + "'", "them");
+        this.addUpdate(question + "'", "them");
 
         Swal.fire({
             position: 'top',
@@ -110,7 +110,7 @@ class GameController extends React.Component {
             } ,
         }).then((result) => {
             let answer = result.value ? "yes" : "no";
-            this.addUpdate("you answered " + answer, "me");
+            this.addUpdate(answer, "me");
             this.props.pubnub.publish({
                 message: {
                     player: this.props.player,
@@ -282,6 +282,7 @@ class GameController extends React.Component {
         let status;
         // Change to current player's turn
         status = `${this.turn == this.props.player ? "it's your turn!" : "it's their turn!"}`;
+
         return (
             <div className="play-container">
                 <div className="game-controller">
