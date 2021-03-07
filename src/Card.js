@@ -15,6 +15,7 @@ function Card(props) {
         setIsShown(false)
     }
 
+    let classNames = "card-container";
     let decor = "";
 
    
@@ -45,12 +46,13 @@ function Card(props) {
     if (isCrossed) {
         decor = "decor"; // updates className for the text, strikesthrough and turns it grey
         visibility = "hidden" // hides guess button
+        classNames = "card-container card-clicked";
     }
 
 
     return (
         <div className="col-md-2 col-lg-2">
-            <div className="card-container" onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
+            <div className={classNames} onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
                 <p className={decor}>{props.name}</p>
                 <button className={visibility} onClick={props.onClick}>GUESS</button>
             </div>

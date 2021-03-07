@@ -1,4 +1,7 @@
 .card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: white;
     width: 9rem;
     height: 9rem;
@@ -6,6 +9,7 @@
     border-radius: 5px;
     text-align: center;
     padding-top: 0.5rem;
+    transition: transform .2s;
 }
 
 .card-container p {
@@ -25,11 +29,15 @@
 }
 
 .card-container:hover {
-    width: 6.5rem;
-    height: 6.5rem;
+    /*width: 9.5rem;*/
+    /*height: 9.5rem;*/
+    transform: scale(1.2);
+}
+
+.card-clicked {
+    background-color: lightgrey;
 }
 
 .decor {
     text-decoration: line-through;
-    color: gray;
 }
