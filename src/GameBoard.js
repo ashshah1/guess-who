@@ -1,7 +1,5 @@
 import Card from './Card.js';
 
-
-
 function GameBoard(props) {
     let names = props.names;
 
