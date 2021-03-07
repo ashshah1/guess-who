@@ -20,6 +20,7 @@ class GameController extends React.Component {
 
         this.turn = 1;
         this.gameOver = false;
+        this.startRound = true;
     }
 
     // Listen for messages
@@ -39,6 +40,7 @@ class GameController extends React.Component {
             } else if (msg.message.winner !== undefined && msg.message.player !== this.props.player) {
                 this.announceWinner(msg.message.winner);
             } else if (msg.message.reset) {
+                this.startRound = true;
                 this.gameOver = false;
                 Swal.close()
             } else if(msg.message.endGame) {
@@ -77,6 +79,7 @@ class GameController extends React.Component {
                 channel: this.props.gameChannel
             });
         }
+        this.startRound = false;
         this.addUpdate("you asked '" + question + "'", "me");
     };
 
@@ -142,6 +145,7 @@ class GameController extends React.Component {
             });
 
             // update newsfeed
+            this.startRound = false;
             this.addUpdate("you guessed " + guess, "me");
         }
     };
@@ -155,7 +159,6 @@ class GameController extends React.Component {
         });
 
         this.addUpdate("they guessed " + guess, "them");
-
         this.checkForWinner(guess);
     };
 
@@ -195,6 +198,7 @@ class GameController extends React.Component {
         }
         // End the game once there is a winner
         this.gameOver = true;
+        this.startRound = true;
         this.newRound(winner);
     };
 
@@ -268,6 +272,7 @@ class GameController extends React.Component {
 
         this.turn = winner;
         this.gameOver = false;
+        this.startRound = true;
     };
 
     newPerson = () => {
@@ -291,7 +296,8 @@ class GameController extends React.Component {
                             names={this.props.names}
                             onClick={guess => this.onGuess(guess)}
                             playing={true}
-                            status={this.turn === this.props.player}>
+                            status={this.turn === this.props.player}
+                            startRound={this.startRound}>
                         </Game>
                     </div>
                     <div className="game-info">
