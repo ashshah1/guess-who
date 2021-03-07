@@ -2,11 +2,11 @@
 
 [guess who](https://hasbrogaming.hasbro.com/en-us/product/guess-who-classic-game:7DEC61D9-5056-9047-F55F-FC686C17D23F) but make it fun, pretty, and customizable. 
 
-add in your own names and create your own guess who board with your friends. the perfect way to expose yourself for not remembering anyone's names. 
+add in your own custom people and create your own guess who board with your friends. the perfect way to expose yourself for not remembering anyone's names. 
 
-coming to a web app near you in 2021.
+coming to [a web app near you](https://guess-who-f8d88.web.app/) in 2021.
 
-definitely created using react.
+created using react.
 
 # created by
 
