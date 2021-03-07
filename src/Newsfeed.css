@@ -3,7 +3,8 @@
     background-color: #fff;
     flex: 2 1 auto;
     height: 70%;
-    margin-right: 3rem;
+    margin-left: 1.4rem;
+    margin-right: 1.4rem;
 }
 
 .news-title, .neither-update {
