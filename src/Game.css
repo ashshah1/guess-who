@@ -1,6 +1,35 @@
+.play-container {
+    height: 85%;
+}
+
 .game-controller {
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    /*justify-content: space-around;*/
+    height: 100%;
+}
+
+.game-controller > * {
+    margin: 1rem;
+}
+
+.game-board {
+    flex: 3 1 0;
+    height: 100%;
+}
+
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    height: 98%;
+}
+
+.game-info > * {
+    margin: .4rem;
+    height: 100%;
+    flex: 1 1 0;
 }
 
 .game-play-page {
@@ -36,6 +65,7 @@
     color:white;
     font-size: 2rem;
     background-color: white;
+    text-align: center;
     /*position: fixed;*/
     /*top: 0;*/
     /*right: 0;*/

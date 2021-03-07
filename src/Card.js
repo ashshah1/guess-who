@@ -38,7 +38,7 @@ function Card(props) {
     }
 
     // hide guess buttons if it's not your turn
-    if (props.status == "Opponent's turn") {
+    if (!props.status) {
         visibility = "hidden";
     }
 

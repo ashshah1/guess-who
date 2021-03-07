@@ -236,18 +236,16 @@ class Lobby extends Component {
         // display game if playing and names for board have loaded
         if (this.state.isPlaying && this.state.names !== undefined) {
             return (
-                <div>
-                    <GameController
-                        pubnub={this.pubnub}
-                        gameChannel={this.gameChannel}
-                        roomId={this.roomId}
-                        player={this.state.player}
-                        names={this.state.names}
-                        isRoomCreator={this.state.isRoomCreator}
-                        myTurn={this.state.myTurn}
-                        endGame={this.endGame}
-                    />
-                </div>
+                <GameController
+                    pubnub={this.pubnub}
+                    gameChannel={this.gameChannel}
+                    roomId={this.roomId}
+                    player={this.state.player}
+                    names={this.state.names}
+                    isRoomCreator={this.state.isRoomCreator}
+                    myTurn={this.state.myTurn}
+                    endGame={this.endGame}
+                />
             )
         }
 
