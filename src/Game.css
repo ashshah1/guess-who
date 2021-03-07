@@ -1,3 +1,36 @@
+.play-container {
+    height: 75%;
+}
+
+.game-controller {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.game-controller > * {
+    margin: 1rem;
+}
+
+.game-board {
+    flex: 3 1 0;
+    height: 98%;
+}
+
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    height: 98%;
+}
+
+.game-info > * {
+    margin: .4rem;
+    height: 100%;
+    flex: 1 1 0;
+}
+
 .game-play-page {
     background-color: #3CAEA3;
     position: fixed;
@@ -12,29 +45,37 @@
     position: fixed;
     bottom: 0px;
     right: 0px; 
-    margin: 5rem;
+    margin: 2rem;
 }
 
 .your-person {
+    position: fixed;
+    left: 0;
+    bottom: 1.2rem;
     font-size: 2rem;
     color: white;
-    margin-left: 4rem;
+    margin-left: 6rem;
     font-weight: 600;
   }
   
 .guess-descrip {
     font-style: italic;
-    margin-left: 4rem;
+    margin-left: 6rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
 }
 
 .status-info {
     color:white;
     font-size: 2rem;
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin-top: 5rem;
-    margin-right: 2rem;
+    text-align: center;
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*right: 0;*/
+    /*margin-top: 5rem;*/
+    /*margin-right: 2rem;*/
+    border-radius: 10px;
      
 }
 
@@ -50,4 +91,34 @@
     text-align: center;
     color: white;
     font-size: 4rem;
+}
+
+.question-container {
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 800;
+}
+
+.question-container input {
+    width: 100%;
+    height: 45px;
+    box-sizing: border-box;
+    border: 1px solid #3CAEA3;
+    border-radius: 10px;
+    font-weight: 800;
+    text-align: center;
+}
+
+input:focus {
+    outline: none !important;
+}
+
+
+/* start/join buttons */
+.ask-question button {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: none;
 }

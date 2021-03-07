@@ -8,3 +8,13 @@
     margin-right: 2rem;
     margin-left: 3rem;
 }
+
+.error-bar {
+    color: red;
+    font-size: 1rem;
+    margin-left: 3rem;
+}
+
+.hidden {
+    display: none;
+}

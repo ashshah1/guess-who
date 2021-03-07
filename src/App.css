@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Nunito:wght@300;400;700&display=swap');html, body, #root, .app-container {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Nunito:wght@300;400;700&display=swap');
+
+html, body, #root, .app-container {
   height: 100%;
 }
 
@@ -29,6 +31,16 @@ body {
   justify-content: space-between;
   list-style: none;
   z-index: 0;
+  margin: 1rem;
+  font-size: 16pt;
+}
+
+.nav-container a:hover {
+  color: lightgrey;
+}
+
+.nav-right {
+  display: flex;
 }
 
 .nav-link {

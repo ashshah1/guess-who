@@ -11,7 +11,12 @@ function Game(props) {
         return (
             <div>
                 <div className="game-play-page">&nbsp;</div>
-                <GameBoard names={names} onClick={props.onClick} status={props.status}></GameBoard>
+                <GameBoard
+                    names={names}
+                    onClick={props.onClick}
+                    status={props.status}
+                    startRound={props.startRound}>
+                </GameBoard>
                 
                 <Link to="/">
                     <Button className="quit-button" variant="danger">quit game</Button>

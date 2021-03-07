@@ -1,9 +1,14 @@
 import './Card.css';
 import { useState } from 'react';
+import {Button} from "react-bootstrap";
 
 function Card(props) {
     const [isShown, setIsShown] = useState(false);
     const [isCrossed, setCrossed] = useState(false);
+
+    if (props.startRound && isCrossed) {
+        setCrossed(false);
+    }
 
     // on mouse enter over card, update state to reveal guess button
     const onEnter = () => {
@@ -15,19 +20,13 @@ function Card(props) {
         setIsShown(false)
     }
 
+    let classNames = "card-container";
     let decor = "";
 
-   
-    // when card is clicked on, update state
-    const handleClick = () => {
-        if (isCrossed) {
-            setCrossed(false);
-        } else {
-            setCrossed(true);
-        }
-    }
+    const onGuess = () => {
+        props.onClick();
+    };
 
-    
 
     // by default, guess button should be hidden (unless card is hovered upon) and guess button should be active
     let visibility = "guess hidden";
@@ -38,21 +37,25 @@ function Card(props) {
     }
 
     // hide guess buttons if it's not your turn
-    if (props.status == "Opponent's turn") {
+    if (!props.status) {
         visibility = "hidden";
     }
 
     // if a card is clicked, run a strike through the name and hide the guess button
     if (isCrossed) {
         decor = "decor"; // updates className for the text, strikesthrough and turns it grey
-        visibility = "hidden" // hides guess button
+        visibility = "hidden"; // hides guess button
+        classNames = "card-container card-clicked";
     }
 
-
     return (
-        <div className="card-container" onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
-            <p className={decor}>{props.name}</p>
-            <button className={visibility} onClick={props.onClick}>GUESS</button>
+        <div className="col-md-2 col-lg-2">
+            <div className={classNames} onClick={() => setCrossed(!isCrossed)} onMouseEnter={onEnter} onMouseLeave={onLeave}>
+                <p className={decor}>{props.name}</p>
+                <div className={visibility}>
+                    <Button variant="outline-success" onClick={onGuess}>GUESS</Button>
+                </div>
+            </div>
         </div>
     )
 }
