@@ -24,7 +24,7 @@ function SetUp (props) {
             <div className="set-up-page">&nbsp;</div>
             <p className="counter">{names.length} / 24 names added</p>
             <NameList names={names} removeName={props.removeName}></NameList>
-            <AddNamesForm addNameCallback={props.addName}></AddNamesForm>
+            <AddNamesForm names={names} addNameCallback={props.addName}></AddNamesForm>
             <Link to={{
                 pathname: '/lobby',
                 state: {
