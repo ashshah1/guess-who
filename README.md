@@ -19,6 +19,6 @@ coming to a web app near you in 2021.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
 
-Realtime playing and chat functions implementing using [PubNub] (https://www.pubnub.com/)
+Realtime playing and chat functions implementing using [PubNub](https://www.pubnub.com/)
 
 
