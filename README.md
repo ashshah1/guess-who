@@ -1,12 +1,12 @@
 # guess who
 
-[guess who](https://guess-who-f8d88.web.app/) but make it fun, pretty, and customizable. 
+guess who but make it fun, pretty, and customizable. 
 
 add in your own custom people and create your own guess who board with your friends. the perfect way to expose yourself for not remembering anyone's names. 
 
-coming to [a web app near you](https://guess-who-f8d88.web.app/) in 2021.
+coming to a web app near you in 2021.
 
-created using react.
+[try it out here!](https://guess-who-f8d88.web.app/)
 
 # created by
 
@@ -17,6 +17,8 @@ created using react.
 
 # beep boop
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
+
+Realtime playing and chat functions implementing using [PubNub] (https://www.pubnub.com/)
 
 
