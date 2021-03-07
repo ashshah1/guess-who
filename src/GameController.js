@@ -39,13 +39,6 @@ class GameController extends React.Component {
             } else if (msg.message.winner !== undefined && msg.message.player !== this.props.player) {
                 this.announceWinner(msg.message.winner);
             } else if (msg.message.reset) {
-                // Start a new round
-                this.setState({
-                    whoseTurn : this.props.myTurn,
-                    person: this.state.names[Math.floor(Math.random() * 24)]
-                });
-
-                this.turn = 1;
                 this.gameOver = false;
                 Swal.close()
             } else if(msg.message.endGame) {
@@ -210,7 +203,7 @@ class GameController extends React.Component {
         let title = winner === this.props.player ? 'you won!' : 'you lost!';
         this.addUpdate(title, "neither");
         // Show this if the player is not the room creator
-        if((this.props.isRoomCreator === false) && this.gameOver){
+        if(this.props.isRoomCreator === false && this.gameOver){
             Swal.fire({
                 position: 'top',
                 allowOutsideClick: false,
@@ -225,7 +218,6 @@ class GameController extends React.Component {
                     confirmButton: 'button-class',
                 } ,
             });
-            this.turn = 1; // Set turn to player 1 so player 2 can't make a move
         } else if (this.props.isRoomCreator && this.gameOver) {
             // Show this to the room creator
             Swal.fire({
@@ -251,7 +243,7 @@ class GameController extends React.Component {
                     // Start a new round
                     this.props.pubnub.publish({
                         message: {
-                          reset: true
+                            reset: true
                         },
                         channel: this.props.gameChannel
                     });
@@ -266,12 +258,30 @@ class GameController extends React.Component {
                 }
             })
         }
+
+        // set up for new round
+        let newPerson = this.newPerson();
+        this.setState({
+            whoseTurn : winner === this.props.player,
+            person: newPerson
+        });
+
+        this.turn = winner;
+        this.gameOver = false;
+    };
+
+    newPerson = () => {
+        let newPerson = this.state.person;
+        while (newPerson === this.state.person) {
+            newPerson = this.state.names[Math.floor(Math.random() * 24)];
+        }
+        return newPerson;
     };
 
     render() {
         let status;
         // Change to current player's turn
-        status = `${this.state.whoseTurn ? "Your turn" : "Opponent's turn"}`;
+        status = `${this.turn == this.props.player ? "Your turn" : "Opponent's turn"}`;
 
         let currStatus;
         if (status === "Your turn") {
@@ -284,7 +294,12 @@ class GameController extends React.Component {
             <div className="play-container">
                 <div className="game-controller">
                     <div className="game-board">
-                        <Game names={this.props.names} onClick={guess => this.onGuess(guess)} playing={true} status={this.turn === this.props.player}></Game>
+                        <Game
+                            names={this.props.names}
+                            onClick={guess => this.onGuess(guess)}
+                            playing={true}
+                            status={this.turn === this.props.player}>
+                        </Game>
                     </div>
                     <div className="game-info">
                         <p className="status-info" style={{color: currStatus}}>{status}</p>
