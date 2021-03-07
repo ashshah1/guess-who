@@ -14,7 +14,7 @@ function SetUp (props) {
     // sets class names for the button to active if the user has reached 24 names
     let status = true;
     let variant = "secondary"
-    if (names.length === 24) {
+    if (names.length === 25) {
         status = false;
         variant = "success";
     }
@@ -22,7 +22,7 @@ function SetUp (props) {
     return (
         <div>
             <div className="set-up-page">&nbsp;</div>
-            <p className="counter">{names.length} / 24 names added</p>
+            <p className="counter">{names.length} / 25 names added</p>
             <NameList names={names} removeName={props.removeName}></NameList>
             <AddNamesForm addNameCallback={props.addName}></AddNamesForm>
             <Link to={{

@@ -27,7 +27,6 @@ function Card(props) {
         }
     }
 
-    
 
     // by default, guess button should be hidden (unless card is hovered upon) and guess button should be active
     let visibility = "guess hidden";
@@ -50,7 +49,7 @@ function Card(props) {
 
 
     return (
-        <div className="card-container" onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
+        <div className="col-md-2 col-lg-2 card-container" onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
             <p className={decor}>{props.name}</p>
             <button className={visibility} onClick={props.onClick}>GUESS</button>
         </div>

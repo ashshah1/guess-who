@@ -281,15 +281,7 @@ class GameController extends React.Component {
     render() {
         let status;
         // Change to current player's turn
-        status = `${this.turn == this.props.player ? "Your turn" : "Opponent's turn"}`;
-
-        let currStatus;
-        if (status === "Your turn") {
-            currStatus = "green";
-        } else {
-            currStatus = "red";
-        }
-
+        status = `${this.turn == this.props.player ? "it's your turn!" : "it's their turn!"}`;
         return (
             <div className="play-container">
                 <div className="game-controller">
@@ -302,7 +294,7 @@ class GameController extends React.Component {
                         </Game>
                     </div>
                     <div className="game-info">
-                        <p className="status-info" style={{color: currStatus}}>{status}</p>
+                        <p className="status-info">{status}</p>
                         <AskQuestion onClick={this.onQuestion} disabled={this.turn !== this.props.player}/>
                         <Newsfeed updates={this.state.updates}/>
                     </div>

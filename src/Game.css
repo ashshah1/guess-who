@@ -1,11 +1,10 @@
 .play-container {
-    height: 85%;
+    height: 75%;
 }
 
 .game-controller {
     display: flex;
     align-items: center;
-    /*justify-content: space-around;*/
     height: 100%;
 }
 
@@ -15,7 +14,6 @@
 
 .game-board {
     flex: 3 1 0;
-    height: 100%;
 }
 
 
@@ -46,7 +44,7 @@
     position: fixed;
     bottom: 0px;
     right: 0px; 
-    margin: 5rem;
+    margin: 2rem;
 }
 
 .your-person {
@@ -64,7 +62,6 @@
 .status-info {
     color:white;
     font-size: 2rem;
-    background-color: white;
     text-align: center;
     /*position: fixed;*/
     /*top: 0;*/
@@ -90,15 +87,10 @@
 }
 
 .question-container {
-    background-color: white;
     padding: 1rem;
     border-radius: 10px;
     text-align: center;
     font-weight: 800;
-}
-.ask-question {
-    background-color: #fff;
-    border-radius: 10px;
 }
 
 .question-container input {
@@ -116,4 +108,5 @@
     width: 100%;
     box-sizing: border-box;
     border-radius: 10px;
+    display: none;
 }

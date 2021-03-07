@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {Button} from "react-bootstrap";
 
+import './Game.css';
+
 function AskQuestion(props) {
     const [question, setQuestion] = useState("");
 
@@ -27,7 +29,7 @@ function AskQuestion(props) {
                     <input
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
-                        placeholder="ASK A QUESTION"
+                        placeholder="ask your opponent a question"
                         disabled={props.disabled}
                     >
                     </input>
