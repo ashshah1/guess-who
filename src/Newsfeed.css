@@ -1,0 +1,70 @@
+.newsfeed {
+    border-radius: 10px;
+    background-color: #fff;
+    flex: 2 1 auto;
+    height: 70%;
+    margin-left: 1.4rem;
+    margin-right: 1.4rem;
+}
+
+.news-title, .neither-update {
+    text-align: center;
+    padding: 1rem;
+}
+
+.news-title {
+    font-size: 1.5rem;
+}
+
+.update-container {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    max-height: 80%;
+    margin: .5rem;
+}
+
+.update-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.update-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.update-container::-webkit-scrollbar-thumb {
+    background: lightgrey;
+    height: 20%;
+}
+
+/* Handle on hover */
+.update-container::-webkit-scrollbar-thumb:hover {
+    background: #3DAEA3;
+}
+
+.my-update {
+    text-align: right;
+    margin-right: 1rem;
+    padding-bottom: 0.5rem;
+    color: black;
+}
+
+.their-update {
+    text-align: left;
+    margin-left: 1rem;
+    padding-bottom: 0.5rem;
+    color: black;
+}
+
+.personal {
+    font-size: 1.2rem;
+    color: cadetblue;
+}
+
+.opponent {
+    font-size: 1.2rem;
+    color: forestgreen;
+}
+
