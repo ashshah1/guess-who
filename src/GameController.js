@@ -34,13 +34,13 @@ class GameController extends React.Component {
                 } else if (msg.message.question !== undefined) {
                     this.publishQuestion(msg.message.question, msg.message.player);
                 }
-                this.startRound = false;
             } else if (msg.message.answer !== undefined && msg.message.player !== this.props.player) {
                 // Get opponent's answer
                 this.addUpdate("they answered " + msg.message.answer, "them");
             } else if (msg.message.winner !== undefined && msg.message.player !== this.props.player) {
                 this.announceWinner(msg.message.winner);
             } else if (msg.message.reset) {
+                this.startRound = true;
                 this.gameOver = false;
                 Swal.close()
             } else if(msg.message.endGame) {
@@ -79,8 +79,8 @@ class GameController extends React.Component {
                 channel: this.props.gameChannel
             });
         }
-        this.addUpdate("you asked '" + question + "'", "me");
         this.startRound = false;
+        this.addUpdate("you asked '" + question + "'", "me");
     };
 
     // Publish opponents question
@@ -145,8 +145,8 @@ class GameController extends React.Component {
             });
 
             // update newsfeed
-            this.addUpdate("you guessed " + guess, "me");
             this.startRound = false;
+            this.addUpdate("you guessed " + guess, "me");
         }
     };
 
@@ -159,7 +159,6 @@ class GameController extends React.Component {
         });
 
         this.addUpdate("they guessed " + guess, "them");
-
         this.checkForWinner(guess);
     };
 
@@ -199,6 +198,7 @@ class GameController extends React.Component {
         }
         // End the game once there is a winner
         this.gameOver = true;
+        this.startRound = true;
         this.newRound(winner);
     };
 
@@ -271,7 +271,7 @@ class GameController extends React.Component {
         });
 
         this.turn = winner;
-        this.gameOver = true;
+        this.gameOver = false;
         this.startRound = true;
     };
 

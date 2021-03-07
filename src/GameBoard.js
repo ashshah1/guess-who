@@ -3,8 +3,6 @@ import Card from './Card.js';
 function GameBoard(props) {
     let names = props.names;
 
-    console.log(props.startRound)
-
     // Creates an array of Card elements to populate the board
     let allCard = names.map((name) => {
         return (
