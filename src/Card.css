@@ -1,11 +1,15 @@
 .card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: white;
-    width: 7rem;
-    height: 7rem;
+    width: 9rem;
+    height: 9rem;
     margin: 1rem;
     border-radius: 5px;
     text-align: center;
     padding-top: 0.5rem;
+    transition: transform .2s;
 }
 
 .card-container p {
@@ -14,10 +18,10 @@
 }
 
 .guess {
-    background-color: #39AE4B;
-    border-radius: 3px;
-    margin-left: 0.4rem;
-    margin-right: 0.4rem;
+    /*background-color: #39AE4B;*/
+    /*border-radius: 3px;*/
+    /*margin-left: 0.4rem;*/
+    /*margin-right: 0.4rem;*/
 }
 
 .hidden {
@@ -25,11 +29,13 @@
 }
 
 .card-container:hover {
-    width: 6.5rem;
-    height: 6.5rem;
+    transform: scale(1.2);
+}
+
+.card-clicked {
+    background-color: lightgrey;
 }
 
 .decor {
     text-decoration: line-through;
-    color: gray;
 }

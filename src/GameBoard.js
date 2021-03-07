@@ -1,7 +1,4 @@
-import './GameBoard.css';
 import Card from './Card.js';
-
-
 
 function GameBoard(props) {
     let names = props.names;
@@ -12,9 +9,9 @@ function GameBoard(props) {
     })
 
     return (
-        <div className="board-container">
-            <div className="cards-container">
-                {allCard}
+        <div className="container">
+            <div className="row">
+                    {allCard}
             </div>
         </div>
     )

@@ -17,3 +17,11 @@
 .personas {
     color: white;
 }
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.zoom {
+    font-size: 1.3rem;
+}

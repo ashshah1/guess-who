@@ -3,29 +3,46 @@
     background-color: #fff;
     flex: 2 1 auto;
     height: 70%;
-
-    /*display: flex;*/
-    /*padding: 5px;*/
+    margin-right: 3rem;
 }
 
 .news-title, .neither-update {
     text-align: center;
+    padding: 1rem;
+}
+
+.news-title {
+    font-size: 1.5rem;
 }
 
 .update-container {
     flex: 1 1 auto;
     overflow-y: auto;
     min-height: 0;
-    max-height: 90%;
+    max-height: 85%;
     margin: .5rem;
 }
 
 .my-update {
     text-align: right;
-    color: #ED553B;
+    margin-right: 1rem;
+    padding-bottom: 0.5rem;
+    color: black;
 }
 
 .their-update {
     text-align: left;
-    color: #FDD55C;
+    margin-left: 1rem;
+    padding-bottom: 0.5rem;
+    color: black;
+}
+
+.personal {
+    font-size: 1.2rem;
+    color: cadetblue;
+}
+
+.opponent {
+    font-size: 1.2rem;
+    color: forestgreen;
 }

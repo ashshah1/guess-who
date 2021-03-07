@@ -31,6 +31,16 @@ body {
   justify-content: space-between;
   list-style: none;
   z-index: 0;
+  margin: 1rem;
+  font-size: 16pt;
+}
+
+.nav-container a:hover {
+  color: lightgrey;
+}
+
+.nav-right {
+  display: flex;
 }
 
 .nav-link {
