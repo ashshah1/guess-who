@@ -1,5 +1,6 @@
 import './Card.css';
 import { useState } from 'react';
+import {Button} from "react-bootstrap";
 
 function Card(props) {
     const [isShown, setIsShown] = useState(false);
@@ -54,7 +55,9 @@ function Card(props) {
         <div className="col-md-2 col-lg-2">
             <div className={classNames} onClick={handleClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
                 <p className={decor}>{props.name}</p>
-                <button className={visibility} onClick={props.onClick}>GUESS</button>
+                <div className={visibility}>
+                    <Button variant="outline-success" onClick={props.onClick}>GUESS</Button>
+                </div>
             </div>
         </div>
     )

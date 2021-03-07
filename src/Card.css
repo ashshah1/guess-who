@@ -18,10 +18,10 @@
 }
 
 .guess {
-    background-color: #39AE4B;
-    border-radius: 3px;
-    margin-left: 0.4rem;
-    margin-right: 0.4rem;
+    /*background-color: #39AE4B;*/
+    /*border-radius: 3px;*/
+    /*margin-left: 0.4rem;*/
+    /*margin-right: 0.4rem;*/
 }
 
 .hidden {
@@ -29,8 +29,6 @@
 }
 
 .card-container:hover {
-    /*width: 9.5rem;*/
-    /*height: 9.5rem;*/
     transform: scale(1.2);
 }
 
