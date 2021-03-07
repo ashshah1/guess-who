@@ -5,6 +5,14 @@ import {Button} from "react-bootstrap";
 function Card(props) {
     const [isShown, setIsShown] = useState(false);
     const [isCrossed, setCrossed] = useState(false);
+    const [newRound, setRound] = useState(props.startRound);
+    //
+    // if (newRound) {
+    //     setCrossed(false);
+    //     setRound(false);
+    // } else {
+    //     setRound(false);
+    // }
 
     // on mouse enter over card, update state to reveal guess button
     const onEnter = () => {
@@ -18,10 +26,10 @@ function Card(props) {
 
     let classNames = "card-container";
     let decor = "";
-
    
     // when card is clicked on, update state
     const handleClick = () => {
+        setRound(false);
         if (isCrossed) {
             setCrossed(false);
         } else {
@@ -44,12 +52,16 @@ function Card(props) {
     }
 
     // if a card is clicked, run a strike through the name and hide the guess button
-    if (isCrossed) {
+    // console.log(props);
+    if (isCrossed && newRound) {
         decor = "decor"; // updates className for the text, strikesthrough and turns it grey
         visibility = "hidden" // hides guess button
         classNames = "card-container card-clicked";
     }
 
+    // if (props.startRound) {
+    //     classNames = "card-container";
+    // }
 
     return (
         <div className="col-md-2 col-lg-2">

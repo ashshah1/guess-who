@@ -20,6 +20,7 @@ class GameController extends React.Component {
 
         this.turn = 1;
         this.gameOver = false;
+        this.startRound = true;
     }
 
     // Listen for messages
@@ -33,6 +34,7 @@ class GameController extends React.Component {
                 } else if (msg.message.question !== undefined) {
                     this.publishQuestion(msg.message.question, msg.message.player);
                 }
+                this.startRound = false;
             } else if (msg.message.answer !== undefined && msg.message.player !== this.props.player) {
                 // Get opponent's answer
                 this.addUpdate("they answered " + msg.message.answer, "them");
@@ -78,6 +80,7 @@ class GameController extends React.Component {
             });
         }
         this.addUpdate("you asked '" + question + "'", "me");
+        this.startRound = false;
     };
 
     // Publish opponents question
@@ -143,6 +146,7 @@ class GameController extends React.Component {
 
             // update newsfeed
             this.addUpdate("you guessed " + guess, "me");
+            this.startRound = false;
         }
     };
 
@@ -267,7 +271,8 @@ class GameController extends React.Component {
         });
 
         this.turn = winner;
-        this.gameOver = false;
+        this.gameOver = true;
+        this.startRound = true;
     };
 
     newPerson = () => {
@@ -290,7 +295,8 @@ class GameController extends React.Component {
                             names={this.props.names}
                             onClick={guess => this.onGuess(guess)}
                             playing={true}
-                            status={this.turn === this.props.player}>
+                            status={this.turn === this.props.player}
+                            startRound={this.startRound}>
                         </Game>
                     </div>
                     <div className="game-info">
