@@ -6,9 +6,9 @@
 
 .board-container {
     border: 3px solid #FFFFFF;
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     border-radius: 20px;
-    margin: 1rem;
-    margin-top: 5rem;
-    width: 70%;
+    /*margin: 1rem;*/
+    /*margin-top: 5rem;*/
+    /*width: 70%;*/
 }
