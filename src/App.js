@@ -71,18 +71,22 @@ const NavBar  = () => {
   return (
       <nav className={navClass}>
         <ul className="nav-container">
-          <li className="home">
-            <Link exact to="/" className="nav-link">guess who?</Link>
-          </li>
-          <li>
-            <Link to="/about" className="nav-link">About</Link>
-          </li>
-          <li>
-            <Link to="/how" className="nav-link">How To Play</Link>
-          </li>
-          <li>
-            <Link to="/privacy" className="nav-link">Privacy Policy</Link>
-          </li>
+          <div className="nav-left">
+            <li className="home">
+              <Link exact to="/" className="nav-link">guess who?</Link>
+            </li>
+          </div>
+          <div className="nav-right">
+            <li>
+              <Link to="/about" className="nav-link">About</Link>
+            </li>
+            <li>
+              <Link to="/how" className="nav-link">How To Play</Link>
+            </li>
+            <li>
+              <Link to="/privacy" className="nav-link">Privacy Policy</Link>
+            </li>
+          </div>
         </ul>
       </nav>
   )
