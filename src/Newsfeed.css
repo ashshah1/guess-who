@@ -58,6 +58,17 @@
     color: black;
 }
 
+.neither-update {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: darkgrey;
+}
+
+.neither-update p {
+    display: none;
+}
+
+
 .personal {
     font-size: 1.2rem;
     color: cadetblue;
