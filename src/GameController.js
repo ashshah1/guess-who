@@ -91,10 +91,11 @@ class GameController extends React.Component {
             whoseTurn: !this.state.whoseTurn
         });
 
-        this.addUpdate(question + "'", "them");
+        this.addUpdate(question, "them");
 
         Swal.fire({
-            position: 'top',
+            heightAuto: false,
+            position: 'center',
             allowOutsideClick: false,
             title: question,
             text: "answer the question about " + this.state.person,
@@ -209,11 +210,11 @@ class GameController extends React.Component {
         // Show this if the player is not the room creator
         if(this.props.isRoomCreator === false && this.gameOver){
             Swal.fire({
-                position: 'top',
+                position: 'center',
                 allowOutsideClick: false,
                 title: title,
                 text: 'Waiting for a new round...',
-                confirmButtonColor: 'rgb(208,33,41)',
+                confirmButtonColor: '#28A744',
                 width: 275,
                 customClass: {
                     heightAuto: false,
@@ -225,15 +226,15 @@ class GameController extends React.Component {
         } else if (this.props.isRoomCreator && this.gameOver) {
             // Show this to the room creator
             Swal.fire({
-                position: 'top',
+                position: 'center',
                 allowOutsideClick: false,
                 title: title,
                 text: 'Continue Playing?',
                 showCancelButton: true,
-                confirmButtonColor: 'rgb(208,33,41)',
+                confirmButtonColor: '#28A744',
                 cancelButtonColor: '#aaa',
-                cancelButtonText: 'Nope',
-                confirmButtonText: 'Yea!',
+                cancelButtonText: 'nope',
+                confirmButtonText: 'yes!',
                 width: 275,
                 customClass: {
                     heightAuto: false,

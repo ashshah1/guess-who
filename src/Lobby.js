@@ -110,7 +110,7 @@ class Lobby extends Component {
 
         // Open the modal
         Swal.fire({
-            position: 'top',
+            position: 'center',
             allowOutsideClick: false,
             title: 'Share this room ID with your friend',
             text: this.roomId,
@@ -162,7 +162,7 @@ class Lobby extends Component {
             } else {
                 // Game in progress
                 Swal.fire({
-                    position: 'top',
+                    position: 'center',
                     allowOutsideClick: false,
                     title: 'Error',
                     text: 'Game in progress. Try another room.',

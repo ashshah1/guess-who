@@ -122,3 +122,8 @@ input:focus {
     border-radius: 10px;
     display: none;
 }
+
+/* ensure popups don't change page */
+body.swal2-height-auto {
+    height: 100% !important;
+}
